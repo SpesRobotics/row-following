@@ -1,0 +1,25 @@
+[0.307s] Invoking command in '/home/milos/row-following/ros2_ws/src/row_following_py_pkg': PYTHONPATH=/home/milos/row-following/ros2_ws/build/row_following_py_pkg/prefix_override:/home/milos/row-following/ros2_ws/install/row_following_py_pkg/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../build/row_following_py_pkg build --build-base /home/milos/row-following/ros2_ws/build/row_following_py_pkg/build install --record /home/milos/row-following/ros2_ws/build/row_following_py_pkg/install.log --single-version-externally-managed install_data
+[0.407s] running egg_info
+[0.407s] writing ../../build/row_following_py_pkg/row_following_py_pkg.egg-info/PKG-INFO
+[0.407s] writing dependency_links to ../../build/row_following_py_pkg/row_following_py_pkg.egg-info/dependency_links.txt
+[0.407s] writing entry points to ../../build/row_following_py_pkg/row_following_py_pkg.egg-info/entry_points.txt
+[0.407s] writing requirements to ../../build/row_following_py_pkg/row_following_py_pkg.egg-info/requires.txt
+[0.408s] writing top-level names to ../../build/row_following_py_pkg/row_following_py_pkg.egg-info/top_level.txt
+[0.415s] reading manifest file '../../build/row_following_py_pkg/row_following_py_pkg.egg-info/SOURCES.txt'
+[0.416s] writing manifest file '../../build/row_following_py_pkg/row_following_py_pkg.egg-info/SOURCES.txt'
+[0.416s] running build
+[0.416s] running build_py
+[0.416s] copying row_following_py_pkg/randomize_node.py -> /home/milos/row-following/ros2_ws/build/row_following_py_pkg/build/lib/row_following_py_pkg
+[0.416s] running install
+[0.416s] running install_lib
+[0.416s] copying /home/milos/row-following/ros2_ws/build/row_following_py_pkg/build/lib/row_following_py_pkg/randomize_node.py -> /home/milos/row-following/ros2_ws/install/row_following_py_pkg/lib/python3.10/site-packages/row_following_py_pkg
+[0.417s] byte-compiling /home/milos/row-following/ros2_ws/install/row_following_py_pkg/lib/python3.10/site-packages/row_following_py_pkg/randomize_node.py to randomize_node.cpython-310.pyc
+[0.417s] running install_data
+[0.417s] running install_egg_info
+[0.418s] removing '/home/milos/row-following/ros2_ws/install/row_following_py_pkg/lib/python3.10/site-packages/row_following_py_pkg-0.0.0-py3.10.egg-info' (and everything under it)
+[0.418s] Copying ../../build/row_following_py_pkg/row_following_py_pkg.egg-info to /home/milos/row-following/ros2_ws/install/row_following_py_pkg/lib/python3.10/site-packages/row_following_py_pkg-0.0.0-py3.10.egg-info
+[0.418s] running install_scripts
+[0.428s] Installing image_subscriber script to /home/milos/row-following/ros2_ws/install/row_following_py_pkg/lib/row_following_py_pkg
+[0.428s] Installing randomize_node script to /home/milos/row-following/ros2_ws/install/row_following_py_pkg/lib/row_following_py_pkg
+[0.428s] writing list of installed files to '/home/milos/row-following/ros2_ws/build/row_following_py_pkg/install.log'
+[0.443s] Invoked command in '/home/milos/row-following/ros2_ws/src/row_following_py_pkg' returned '0': PYTHONPATH=/home/milos/row-following/ros2_ws/build/row_following_py_pkg/prefix_override:/home/milos/row-following/ros2_ws/install/row_following_py_pkg/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../build/row_following_py_pkg build --build-base /home/milos/row-following/ros2_ws/build/row_following_py_pkg/build install --record /home/milos/row-following/ros2_ws/build/row_following_py_pkg/install.log --single-version-externally-managed install_data
