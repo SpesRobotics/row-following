@@ -6,13 +6,13 @@ class TwistPublisher(Node):
     def __init__(self):
         super().__init__('twist_publisher_node')
         self.publisher_ = self.create_publisher(Twist, 'cmd_vel', 10)
-        self.timer_period = 1  # seconds (publish every 1 second)
+        self.timer_period = 0.1  # seconds (publish every 1 second)
         self.timer = self.create_timer(self.timer_period, self.timer_callback)
-        self.msg = Twist()  # Initialize the Twist message here
+        self.msg = Twist()
+        self.get_logger().info('Isaac Twist Messages Started: "%s"' % self.msg)
 
     def timer_callback(self):
-        change = 0.1
-        # Increment each component of the message
+        change = 1
         self.msg.linear.x += change
         self.msg.linear.y += change
         self.msg.linear.z += change
@@ -20,8 +20,7 @@ class TwistPublisher(Node):
         self.msg.angular.y += change
         self.msg.angular.z += change
         self.publisher_.publish(self.msg)
-        # Log the current state of the message
-        self.get_logger().info('Publishing: "%s"' % self.msg)
+        # self.get_logger().info('Publishing: "%s"' % self.msg)
 
 def main(args=None):
     rclpy.init(args=args)
