@@ -45,31 +45,48 @@ class SegmentationDisplayNode(Node):
         return color_segmented_image
 
     def segmentation_callback(self, msg):
-        try:
-            # Convert the ROS Image message to a numpy array
-            # segmentation = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
-            self.semantic_img = self.bridge.imgmsg_to_cv2(msg, desired_encoding='32SC1')
-        except CvBridgeError as e:
-            self.get_logger().error(f"Error converting image: {str(e)}")
-            return
+
+        self.semantic_img = self.bridge.imgmsg_to_cv2(msg, desired_encoding='32SC1')
+
+        condition = (self.semantic_img == 1) # Class 1: white Cilantro Om
+        condition2 = (self.semantic_img == 2) # Class 2: black Ground
+        condition3 = (self.semantic_img == 0) # Class 0: black Background
+        # print(condition)
+        gray_image = np.zeros(self.semantic_img.shape, dtype=np.uint8)
+        # rgb_image[condition] = [255, 255, 255]
+        # rgb_image[condition2] = [0, 0, 0]
+        # rgb_image[condition3] = [0, 0, 0]
+
+        gray_image[condition] = 255
+        gray_image[condition2] = 0
+        gray_image[condition3] = 0
+
+        cv2.imshow('Segmentation Display', gray_image)
+        cv2.waitKey(1)
+
 
         # Map the class IDs to colors
-        color_segmentation = self.colormap[self.semantic_img]
+        # color_segmentation = self.colormap[self.semantic_img]
+        # color_segmentation = self.semantic_img[self.colormap]
+
+        # np.set_printoptions(threshold=np.inf)
+        # print(self.semantic_img)
+
         # color_segmentation = self.safe_color_mapping()
         # m = np.max(self.semantic_img)
         # print(m)
 
-        if color_segmentation is not None and self.image_counter <= self.max_images:
-            filename = os.path.join(self.image_dir, f'MaskCilantroOm_{self.image_counter}.png')
-            cv2.imwrite(filename, color_segmentation)
-            self.get_logger().info(f'Saved image to {filename}')
-            self.image_counter += 1
-        else:
-            self.get_logger().info('No image available to save')
+        # if color_segmentation is not None and self.image_counter <= self.max_images:
+        #     filename = os.path.join(self.image_dir, f'MaskCilantroOm_{self.image_counter}.png')
+        #     cv2.imwrite(filename, color_segmentation)
+        #     self.get_logger().info(f'Saved image to {filename}')
+        #     self.image_counter += 1
+        # else:
+        #     self.get_logger().info('No image available to save')
 
         # Display the color-mapped segmentation image
-        cv2.imshow('Segmentation Display', color_segmentation)
-        cv2.waitKey(1)
+        # cv2.imshow('Segmentation Display', color_segmentation)
+        # cv2.waitKey(1)
 
 def main(args=None):
     rclpy.init(args=args)

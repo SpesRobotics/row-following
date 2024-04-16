@@ -33,29 +33,29 @@ class ImageSubscriber(Node):
             [255, 255, 255],     # Class 1: white Cilantro Om
             [0, 0, 0],       # Class 2: black Ground
         ], dtype=np.uint8)
-        self.color_segmentation = None #masked image
+        self.mask_grey_image = None #masked image
         self.semantic_img = None
         self.bridge = CvBridge()
         self.tiwst = Twist()
-        self.cv_image = None  # Stores the latest rgb image
+        self.rgb_image = None  # Stores the latest rgb image
         self.image_dir = '/home/milos/row-following/ros2_ws/Dataset'  # Directory to save images
         self.image_counter = 1
-        self.max_images = 300
+        self.max_images = 100
 
     def isaac_callback(self, msg):
         # Save the images when a cmd_vel message is received
-        if self.cv_image is not None and self.color_segmentation is not None and msg.linear.x <= self.max_images:
+        if self.rgb_image is not None and self.mask_grey_image is not None and msg.linear.x <= self.max_images:
             # filename = os.path.join(self.image_dir, f'CilantroOm_{self.image_counter}.png')
             filename = os.path.join(self.image_dir, f'CilantroOm_{int(msg.linear.x)}.png')
-            cv2.imwrite(filename, self.cv_image)
+            cv2.imwrite(filename, self.rgb_image)
             # filename = os.path.join(self.image_dir, f'MaskedCilantroOm_{self.image_counter}.png')
             filename = os.path.join(self.image_dir, f'MaskedCilantroOm_{int(msg.linear.x)}.png')
-            cv2.imwrite(filename, self.color_segmentation)
+            cv2.imwrite(filename, self.mask_grey_image)
             # self.get_logger().info(f'Saved image to {filename}')
             self.image_counter += 1
-            cv2.imshow('RGB Image', self.cv_image)
-            cv2.imshow('Segmentation Display', self.color_segmentation)
-            # combined_image = cv2.hconcat([self.cv_image, self.color_segmentation])
+            cv2.imshow('RGB Image', self.rgb_image)
+            cv2.imshow('Masked Image', self.mask_grey_image)
+            # combined_image = cv2.hconcat([self.rgb_image, self.mask_grey_image])
             # cv2.imshow('Combined Image - Side by Side', combined_image)
             cv2.waitKey(1)
         else:
@@ -63,9 +63,9 @@ class ImageSubscriber(Node):
 
     def image_callback(self, msg):
         # Update the latest rgb image
-        self.cv_image = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
+        self.rgb_image = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
 
-        # cv2.imshow('RGB Image', self.cv_image)
+        # cv2.imshow('RGB Image', self.rgb_image)
         # cv2.waitKey(1)
 
     def safe_color_mapping(self):
@@ -87,12 +87,20 @@ class ImageSubscriber(Node):
     def segmentation_callback(self, msg):
         # Update the latest semantic image
         self.semantic_img = self.bridge.imgmsg_to_cv2(msg, desired_encoding='32SC1')
+        condition = (self.semantic_img == 1) # Class 1: white Cilantro Om
+        condition2 = (self.semantic_img == 2) # Class 2: black Ground
+        condition3 = (self.semantic_img == 0) # Class 0: black Background
+        # print(condition)
+        self.mask_grey_image = np.zeros(self.semantic_img.shape, dtype=np.uint8)
+        self.mask_grey_image[condition] = 255
+        # self.mask_grey_image[condition2] = 0
+        # self.mask_grey_image[condition3] = 0
 
         #Create a mask
-        self.color_segmentation = self.colormap[self.semantic_img]
-        # self.color_segmentation = self.safe_color_mapping()
+        # self.mask_grey_image = self.colormap[self.semantic_img]
+        # self.mask_grey_image = self.safe_color_mapping()
 
-        # cv2.imshow('Segmentation Display', self.color_segmentation)
+        # cv2.imshow('Segmentation Display', self.mask_grey_image)
         # cv2.waitKey(1)
 
 def main(args=None):
