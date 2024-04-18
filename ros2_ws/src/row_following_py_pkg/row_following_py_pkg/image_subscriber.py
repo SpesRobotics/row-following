@@ -55,6 +55,7 @@ class ImageSubscriber(Node):
             self.image_counter += 1
             cv2.imshow('RGB Image', self.rgb_image)
             cv2.imshow('Masked Image', self.mask_grey_image)
+
             # combined_image = cv2.hconcat([self.rgb_image, self.mask_grey_image])
             # cv2.imshow('Combined Image - Side by Side', combined_image)
             cv2.waitKey(1)
@@ -92,7 +93,27 @@ class ImageSubscriber(Node):
         condition3 = (self.semantic_img == 0) # Class 0: black Background
         # print(condition)
         self.mask_grey_image = np.zeros(self.semantic_img.shape, dtype=np.uint8)
-        self.mask_grey_image[condition] = 255
+        self.mask_grey_image[condition2] = 255
+
+        _, binary = cv2.threshold(self.mask_grey_image, 127, 255, cv2.THRESH_BINARY)
+        image_with_boxes = cv2.cvtColor(self.mask_grey_image, cv2.COLOR_GRAY2BGR)
+
+        # Find contours from the binary image
+        contours, hierarchy = cv2.findContours(binary, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+        # Create a copy of the mask to draw bounding boxes on (optional)
+        # image_with_boxes = np.copy(self.mask_grey_image)
+
+        # Loop through all detected contours
+        for contour in contours:
+            # Get the bounding rectangle for each contour
+            x, y, w, h = cv2.boundingRect(contour)
+            
+            # Draw the rectangle
+            cv2.rectangle(image_with_boxes, (x, y), (x+w, y+h), (255, 0, 0), 2)  # Draw with blue borders
+
+        # cv2.imshow('Image with Bounding Boxes', image_with_boxes)
+        # cv2.waitKey(1)
         # self.mask_grey_image[condition2] = 0
         # self.mask_grey_image[condition3] = 0
 
@@ -113,3 +134,34 @@ def main(args=None):
 
 if __name__ == '__main__':
     main()
+
+#color_segmentation = self.colormap[self.semantic_img]
+
+# Resulting Array: The result is a new array (color_segmentation) where each pixel in semantic_img has been replaced by the corresponding RGB color from self.colormap. The shape of color_segmentation will be identical to semantic_img, but with an extra dimension for color:
+
+# arduino
+# Copy code
+# Shape: (height, width, 3)
+# Visual Example
+# If semantic_img is:
+
+# lua
+# Copy code
+# [[0, 1],
+#  [2, 2]]
+# And self.colormap is:
+
+# lua
+# Copy code
+# [[0, 0, 0],
+#  [128, 0, 0],
+#  [0, 128, 0]]
+# Then self.colormap[semantic_img] results in:
+
+# lua
+# Copy code
+# [[[  0,   0,   0],   # Black
+#   [128,   0,   0]],  # Red
+
+#  [[  0, 128,   0],   # Green
+#   [  0, 128,   0]]]  # Green

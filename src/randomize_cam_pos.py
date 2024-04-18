@@ -59,9 +59,23 @@ def set_rotate(prim, rot_mat):
 parcel_prim = prims_utils.get_prim_at_path(prim_path)
 
 
-roll_angle_degrees = random.uniform(70, 80)
+# roll_angle_degrees = random.uniform(70, 80)
+# pitch_angle_degrees = random.uniform(-10, 10)
+# yaw_angle_degrees = random.uniform(0, 360)
+
+# roll_angle_radians = math.radians(roll_angle_degrees)
+# pitch_angle_radians = math.radians(pitch_angle_degrees)
+# yaw_angle_radians = math.radians(yaw_angle_degrees)
+
+# rot_mat = transforms3d.euler.euler2mat(roll_angle_radians, pitch_angle_radians, yaw_angle_radians)
+# set_rotate(parcel_prim, rot_mat)
+
+# translate = Gf.Vec3d(random.uniform(-0.1, 2.1), random.uniform(0.3, 2.2), random.uniform(0.39, 0.41))
+# set_translate(parcel_prim, translate)
+
+roll_angle_degrees = random.uniform(30, 45)
 pitch_angle_degrees = random.uniform(-10, 10)
-yaw_angle_degrees = random.uniform(0, 360)
+yaw_angle_degrees = random.uniform(-85, -95)
 
 roll_angle_radians = math.radians(roll_angle_degrees)
 pitch_angle_radians = math.radians(pitch_angle_degrees)
@@ -70,7 +84,8 @@ yaw_angle_radians = math.radians(yaw_angle_degrees)
 rot_mat = transforms3d.euler.euler2mat(roll_angle_radians, pitch_angle_radians, yaw_angle_radians)
 set_rotate(parcel_prim, rot_mat)
 
-translate = Gf.Vec3d(random.uniform(-0.1, 2.1), random.uniform(0.3, 2.2), random.uniform(0.39, 0.41))
+# translate = Gf.Vec3d(random.uniform(-0.2, 1.4), random.uniform(0.6, 2.2), random.uniform(0.39, 0.41))
+translate = Gf.Vec3d(random.uniform(-0.2, 1.4), random.uniform(0.4, 2.2), random.uniform(0.49, 0.51))
 set_translate(parcel_prim, translate)
 
 #RANDOM POSITIONS(20x12)

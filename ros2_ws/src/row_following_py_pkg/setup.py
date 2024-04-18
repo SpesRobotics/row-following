@@ -22,7 +22,9 @@ setup(
         'console_scripts': [
             'image_subscriber = row_following_py_pkg.image_subscriber:main',
             'randomize_node = row_following_py_pkg.randomize_node:main',
-            'semantic_image_subscriber = row_following_py_pkg.semantic_image_subscriber:main'
+            'semantic_image_subscriber = row_following_py_pkg.semantic_image_subscriber:main',
+            'main_node = row_following_py_pkg.main_node:main'
+
         ],
     },
 )

@@ -6,7 +6,7 @@ class TwistPublisher(Node):
     def __init__(self):
         super().__init__('twist_publisher_node')
         self.publisher_ = self.create_publisher(Twist, 'cmd_vel', 10)
-        self.timer_period = 0.1  # seconds (publish every 1 second)
+        self.timer_period = 1  # seconds (publish every 1 second)
         self.timer = self.create_timer(self.timer_period, self.timer_callback)
         self.msg = Twist()
         self.get_logger().info('Isaac Twist Messages Started: "%s"' % self.msg)

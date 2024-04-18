@@ -15,11 +15,11 @@
                 double radius = 5
             }
             dictionary Top = {
-                double3 position = (0, 0, 5)
+                double3 position = (1.3768823514384463, 1.2107389925034737, 4.499467059671973)
                 double radius = 5
-                double3 target = (-1.1102230775014838e-15, -6.123233810399562e-16, 0)
+                double3 target = (0.7883399163696911, 1.202057821328598, -0.46576631242549293)
             }
-            string boundCamera = "/World/Camera"
+            string boundCamera = "/OmniverseKit_Top"
         }
         dictionary metricsAssembler = {
             dictionary "/World/Props/Goldflame_Spirea" = {
@@ -164,6 +164,17 @@ def Xform "World"
                 uniform token info:implementationSource = "sourceAsset"
                 uniform asset info:mdl:sourceAsset = @http://omniverse-content-production.s3.us-west-2.amazonaws.com/Materials/vMaterials_2/Ceramic/Grog_Fired_Clay.mdl@
                 uniform token info:mdl:sourceAsset:subIdentifier = "Grog_Fired_Clay_Dirt"
+                float2 inputs:texture_scale = (0.025, 0.025) (
+                    customData = {
+                        float2 default = (1, 1)
+                    }
+                    displayGroup = "Transform"
+                    displayName = "Scale"
+                    doc = """Larger numbers increase the size.
+
+"""
+                    hidden = false
+                )
                 token outputs:out (
                     renderType = "material"
                 )
@@ -201,7 +212,7 @@ def Xform "World"
             custom double state:accumulatedSeconds
             custom uint state:frameCount
             uniform token ui:nodegraph:node:expansionState = "open"
-            uniform float2 ui:nodegraph:node:pos = (-162.21521, 604.7537)
+            uniform float2 ui:nodegraph:node:pos = (-478.26587, 786.9619)
         }
 
         def OmniGraphNode "isaac_create_render_product" (
@@ -355,6 +366,103 @@ def compute(db: og.Database):
             uniform token ui:nodegraph:node:expansionState = "open"
             uniform float2 ui:nodegraph:node:pos = (443.537, 697.0367)
         }
+
+        def OmniGraphNode "isaac_create_viewport" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom uint inputs:execIn
+            prepend uint inputs:execIn.connect = </World/ActionGraph/on_tick.outputs:tick>
+            custom token inputs:name
+            custom uint inputs:viewportId
+            token node:type = "omni.isaac.core_nodes.IsaacCreateViewport"
+            int node:typeVersion = 2
+            custom uint outputs:execOut (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            custom token outputs:viewport = ""
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (-175.71967, 937.7681)
+        }
+
+        def OmniGraphNode "isaac_get_viewport_render_product" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom uint inputs:execIn
+            prepend uint inputs:execIn.connect = </World/ActionGraph/isaac_create_viewport.outputs:execOut>
+            custom token inputs:viewport = ""
+            prepend token inputs:viewport.connect = </World/ActionGraph/isaac_create_viewport.outputs:viewport>
+            token node:type = "omni.isaac.core_nodes.IsaacGetViewportRenderProduct"
+            int node:typeVersion = 1
+            custom uint outputs:execOut (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            custom token outputs:renderProductPath
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (85.3625, 999.8759)
+        }
+
+        def OmniGraphNode "isaac_set_camera" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+            instanceable = false
+        )
+        {
+            custom rel inputs:cameraPrim = </World/Camera> (
+                customData = {
+                    dictionary omni = {
+                        dictionary graph = {
+                            string relType = "target"
+                        }
+                    }
+                }
+            )
+            custom uint inputs:execIn
+            prepend uint inputs:execIn.connect = </World/ActionGraph/isaac_get_viewport_render_product.outputs:execOut>
+            custom token inputs:renderProductPath
+            prepend token inputs:renderProductPath.connect = </World/ActionGraph/isaac_get_viewport_render_product.outputs:renderProductPath>
+            token node:type = "omni.isaac.core_nodes.IsaacSetCameraOnRenderProduct"
+            int node:typeVersion = 1
+            custom uint outputs:execOut (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (416.80075, 1017.3868)
+        }
+
+        def OmniGraphNode "ros2_camera_helper_02" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom uint64 inputs:context
+            custom bool inputs:enabled
+            custom bool inputs:enableSemanticLabels
+            custom uint inputs:execIn
+            prepend uint inputs:execIn.connect = </World/ActionGraph/isaac_set_camera.outputs:execOut>
+            custom string inputs:frameId
+            custom string inputs:nodeNamespace
+            custom uint64 inputs:queueSize
+            custom token inputs:renderProductPath
+            prepend token inputs:renderProductPath.connect = </World/ActionGraph/isaac_get_viewport_render_product.outputs:renderProductPath>
+            custom bool inputs:resetSimulationTimeOnStop
+            custom string inputs:semanticLabelsTopicName
+            custom float2 inputs:stereoOffset
+            custom string inputs:topicName = "camera_info"
+            custom token inputs:type = "camera_info" (
+                allowedTokens = ["rgb", "depth", "depth_pcl", "instance_segmentation", "semantic_segmentation", "bbox_2d_tight", "bbox_2d_loose", "bbox_3d", "camera_info"]
+            )
+            custom token inputs:viewport
+            token node:type = "omni.isaac.ros2_bridge.ROS2CameraHelper"
+            int node:typeVersion = 2
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (717.0765, 1062.1224)
+        }
     }
 
     def Camera "Camera" (
@@ -383,7 +491,7 @@ def compute(db: og.Database):
         custom float fthetaWidth
         float horizontalAperture = 20.955
         float horizontalApertureOffset = 0
-        custom vector3d omni:kit:centerOfInterest = (-3.783080398728785e-16, -2.821096400786833e-15, -42.99889600620506)
+        custom vector3d omni:kit:centerOfInterest = (-3.7746352076886504e-16, -2.8147987027375695e-15, -42.90290706253648)
         token projection = "perspective"
         uniform token purpose = "default"
         double shutter:close = 0
@@ -392,9 +500,9 @@ def compute(db: og.Database):
         float verticalAperture = 15.2908
         float verticalApertureOffset = 0
         token visibility = "inherited"
-        quatd xformOp:orient = (0.7690003058852922, 0.636355161151569, 0.057849923992355445, -0.018547903336123682)
+        quatd xformOp:orient = (0.6852343248585409, 0.2606773215472763, -0.1759960640463455, -0.6569068727809082)
         float3 xformOp:scale = (1, 1, 1)
-        double3 xformOp:translate = (1.6631603990527417, 1.0643618945404345, 0.40956401630462497)
+        double3 xformOp:translate = (0.712806726744063, 1.33726173143944, 0.5072245633600642)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
     }
 
@@ -450,6 +558,19 @@ def compute(db: og.Database):
         double3 xformOp:scale = (1, 1, 1)
         double3 xformOp:translate = (0.4000000059604645, 0, 0)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        over "persun_isaac"
+        {
+            double3 xformOp:translate = (0, 0.53337, 0)
+
+            over "persunovo"
+            {
+                quatd xformOp:orient = (1, 0, 0, 0)
+                double3 xformOp:scale = (0.1, 0.1, 0.1)
+                double3 xformOp:translate = (-1.7763568394002505e-15, 0, 0)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+        }
     }
 
     def Xform "persun_0_5" (
@@ -1400,6 +1521,34 @@ def compute(db: og.Database):
         double3 xformOp:scale = (1, 1, 1)
         double3 xformOp:translate = (1.899999976158142, 1.600000023841858, 0)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+    }
+
+    def Camera "Camera_01" (
+        hide_in_stage_window = false
+        no_delete = false
+    )
+    {
+        float4[] clippingPlanes = []
+        float2 clippingRange = (1, 1000000)
+        float exposure = 0
+        float focalLength = 50
+        float focusDistance = 0
+        float fStop = 0
+        float horizontalAperture = 20.955
+        float horizontalApertureOffset = 0
+        custom vector3d omni:kit:centerOfInterest = (0, 0, -24.44530531465749)
+        token projection = "perspective"
+        uniform token purpose = "default"
+        double shutter:close = 0
+        double shutter:open = 0
+        uniform token stereoRole = "mono"
+        float verticalAperture = 15.2908
+        float verticalApertureOffset = 0
+        token visibility = "inherited"
+        float3 xformOp:rotateYXZ = (86.54205, 3.2235192e-8, -87.857704)
+        float3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (-0.642607401033491, 0.7852967678975948, 0.1971312397023513)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateYXZ", "xformOp:scale"]
     }
 }
 
