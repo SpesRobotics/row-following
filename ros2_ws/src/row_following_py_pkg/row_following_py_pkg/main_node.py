@@ -15,10 +15,10 @@ import time
 from ultralytics import YOLO
 
 directory_path = '/home/milos/row-following/ros2_ws/Dataset/Images' # Path to the save the dataset
-yolo_model_path = '/home/milos/row-following/ros2_ws/Dataset/best.pt'
+# yolo_model_path = '/home/milos/row-following/ros2_ws/Dataset/best.pt'
+yolo_model_path = '/home/milos/row-following/ros2_ws/Dataset/runs/detect/train9/weights/best.pt'
 
 classNames = ['Ground', 'CilantroOm']
-
 
 def convert_bbox_to_yolo_format(x, y, w, h, image_width, image_height):
     x_center = (x + w / 2) / image_width
@@ -148,7 +148,7 @@ class MainNode(Node):
         self.max_images = 300
         self.run_node = True  # For executing the program
         # self.model = YOLO('/home/milos/row-following/ros2_ws/Dataset/yolov8n.pt')
-        self.model = YOLO('/home/milos/row-following/ros2_ws/Dataset/best.pt')
+        self.model = YOLO(yolo_model_path)
         self.get_logger().info('Collecting Simulation Dataset!')
 
     def publish_message(self):
@@ -161,7 +161,7 @@ class MainNode(Node):
             self.msg.angular.y += change
             self.msg.angular.z += change
             self.publisher_.publish(self.msg)
-            time.sleep(1) #0.1 Wait for the camera in IsaacSim to get to the posititon
+            time.sleep(1) #0.2 Wait for the camera in IsaacSim to get to the posititon
             self.save_success = False
             self.save_success2 = False
 
@@ -224,9 +224,9 @@ class MainNode(Node):
 
             height, width = mask_grey_image.shape
 
-            cropped_masked_image  = mask_grey_image[int((height / 2) - 40) : int((height / 2) + 40), :] # Crop the image
+            # cropped_masked_image  = mask_grey_image[int((height / 2) - 40) : int((height / 2) + 40), :] # Crop the image
 
-            bounding_box_img = draw_bounding_boxes(cropped_masked_image, 0, int(self.msg.linear.x)) # Draw bounding boxes
+            bounding_box_img = draw_bounding_boxes(mask_grey_image, 0, int(self.msg.linear.x)) # Draw bounding boxes
 
             self.save_success2 = cv2.imwrite(filename, bounding_box_img)
             self.publish_message()
@@ -245,3 +245,5 @@ def main(args=None):
 
 if __name__ == '__main__':
     main()
+
+    #ros2 topic pub /joint_command sensor_msgs/msg/JointState '{"position":[1.3],"effort":[0.0],"effort":[0.0],"name":["left_motor"]}'
