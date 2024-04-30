@@ -8,7 +8,7 @@
             }
             dictionary Perspective = {
                 double3 position = (0.3807397740605837, -0.45353658694783405, 0.2890212691178732)
-                double3 target = (-0.13672163294121642, 0.24674073695092935, 0.04145778279294143)
+                double3 target = (-0.1367216329412162, 0.24674073695092957, 0.04145778279294143)
             }
             dictionary Right = {
                 double3 position = (0, -5, 0)
@@ -85,7 +85,8 @@
 def Xform "World"
 {
     def "persun_isaac" (
-        prepend references = @file:/home/milos/row-following/Simulation/persun_isaac.usd@
+        delete references = @file:/home/milos/row-following/Simulation/persun_isaac.usd@
+        prepend references = @./persun_isaac.usd@
     )
     {
         double3 xformOp:rotateXYZ = (0, 0, 0)

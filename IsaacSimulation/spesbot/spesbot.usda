@@ -7,8 +7,8 @@
                 double radius = 1.5637481689453125
             }
             dictionary Perspective = {
-                double3 position = (-0.5792931061622769, 1.5507538401156291, 0.9097080701316945)
-                double3 target = (1.213559772156657, -0.5303252929592499, 0.0946077490051841)
+                double3 position = (-0.8067853169671887, 1.415224785471929, 0.9871706120458589)
+                double3 target = (1.0449208165045718, -0.47521837193412875, -0.07049471682202346)
             }
             dictionary Right = {
                 double3 position = (0, -5, 0)
@@ -18,7 +18,7 @@
                 double3 position = (0, 0, 5)
                 double radius = 5
             }
-            string boundCamera = "/World/spesbot_raw/base_link/Camera"
+            string boundCamera = "/OmniverseKit_Persp"
         }
         dictionary navmeshSettings = {
             double agentHeight = 180
@@ -128,9 +128,10 @@ def Xform "World"
                 float2 clippingRange = (0.01, 10000000)
                 float focalLength = 18.147562
                 float focusDistance = 400
-                quatd xformOp:orient = (0.6408563820557884, 0.2988362387301199, -0.2988362387301199, -0.6408563820557887)
+                custom uniform vector3d omni:kit:centerOfInterest = (0, 0, -125.9348964194402)
+                quatd xformOp:orient = (0.6408563820557884, 0.29883623873011983, -0.2988362387301199, -0.6408563820557887)
                 double3 xformOp:scale = (1, 1, 1)
-                double3 xformOp:translate = (-0.08252304704609752, 0, 0.4)
+                double3 xformOp:translate = (-0.1, 1.1093356479670479e-31, 0.5)
                 uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
             }
         }
@@ -445,6 +446,7 @@ def Xform "Environment"
             interpolation = "faceVarying"
         )
         uniform token subdivisionScheme = "none"
+        token visibility = "inherited"
         quatd xformOp:orient = (1, 0, 0, 0)
         double3 xformOp:scale = (1, 1, 1)
         double3 xformOp:translate = (1.2115703822657065, 0.007166017259538908, 0.5)
