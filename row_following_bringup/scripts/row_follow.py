@@ -15,11 +15,12 @@ import time
 
 from ultralytics import YOLO
 
-# yolo_model_path = '/home/milos/row-following/ros2_ws/Dataset/best.pt'
-# yolo_model_path = '/home/milos/row-following/ros2_ws/Dataset/runs/detect/train9/weights/best.pt'
-#yolo_model_path = '/home/pilaciv/Workspaces/row-following/src/best.pt'
-yolo_model_path = '/home/milos/Workspaces/row-following/ros2_ws/Dataset/best.pt'
 
+ssh = True
+if ssh:
+    yolo_model_path = '/home/milos/row-following/ml/resources/best.pt'
+else:
+    yolo_model_path = '/home/pilaciv/Workspaces/row-following/ml/resources/best.pt'
 
 classNames = ['Ground', 'CilantroOm']
 
@@ -124,7 +125,7 @@ class RowFollow(Node):
         #     cmd_vel.angular.z = -0.1
         # else:
         #     cmd_vel.angular.z = 0.0
-        cmd_vel.linear.x = 1.0
+        cmd_vel.linear.x = 0.1
         # self.publisher_.publish(cmd_vel)
 
         desired_value = 0.0

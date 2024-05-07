@@ -65,48 +65,6 @@ def cleanup(db: og.Database):
     print("Finished!")
 
 def compute(db: og.Database):
-    # def set_translate(prim, new_loc):
-    #     properties = prim.GetPropertyNames()
-    #     if 'xformOp:translate' in properties:
-    #         translate_attr = prim.GetAttribute('xformOp:translate')
-    #         translate_attr.Set(new_loc)
-    #     elif 'xformOp:translation' in properties:
-    #         translation_attr = prim.GetAttribute('xformOp:translate')
-    #         translation_attr.Set(new_loc)
-    #     elif 'xformOp:transform' in properties:
-    #         transform_attr = prim.GetAttribute('xformOp:transform')
-    #         matrix = prim.GetAttribute('xformOp:transform').Get()
-    #         matrix.SetTranslateOnly(new_loc)
-    #         transform_attr.Set(matrix)
-    #     else:
-    #         xform = UsdGeom.Xformable(prim)
-    #         xform_op = xform.AddXformOp(
-    #             UsdGeom.XformOp.TypeTranslate, UsdGeom.XformOp.PrecisionDouble, '')
-    #         xform_op.Set(new_loc)
-
-    # def set_rotate(prim, rot_mat):
-    #     properties = prim.GetPropertyNames()
-    #     if 'xformOp:rotate' in properties:
-    #         rotate_attr = prim.GetAttribute('xformOp:rotate')
-    #         rotate_attr.Set(rot_mat)
-    #     elif 'xformOp:transform' in properties:
-    #         transform_attr = prim.GetAttribute('xformOp:transform')
-    #         matrix = prim.GetAttribute('xformOp:transform').Get()
-    #         matrix.SetRotateOnly(rot_mat.ExtractRotation())
-    #         transform_attr.Set(matrix)
-    #     elif 'xformOp:orient' in properties:
-    #         orient_attr = prim.GetAttribute('xformOp:orient')
-    #         q = transforms3d.quaternions.mat2quat(rot_mat)
-    #         quad = Gf.Quatd(q[0], q[1], q[2], q[3])
-    #         orient_attr.Set(quad)
-    #     else:
-    #         xform = UsdGeom.Xformable(prim)
-    #         xform_op = xform.AddXformOp(
-    #             UsdGeom.XformOp.TypeOrient, UsdGeom.XformOp.PrecisionDouble, '')
-    #         q = transforms3d.quaternions.mat2quat(rot_mat)
-    #         quad = Gf.Quatd(q[0], q[1], q[2], q[3])
-    #         xform_op.Set(quad)
-
     # roll_angle_degrees = random.uniform(70, 80)
     roll_angle_degrees = random.uniform(30, 45)
     pitch_angle_degrees = random.uniform(-10, 10)

@@ -47,7 +47,7 @@ def set_rotate(prim, rot_mat):
 # GroundPlane(prim_path="/World/groundPlane", size=10, color=np.array([0.5, 0.5, 0.5]))
 
 #OBJ PATH
-plant_usd_path = '/home/milos/row-following/IsaacSimulation/Simulation/persun_scaled.usda'
+plant_usd_path = '/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda'
 
 for i in range(NUM_ROWS):
     for j in range(NUM_SUB_ROWS):
@@ -72,7 +72,7 @@ for i in range(NUM_ROWS):
             rot_mat = transforms3d.euler.euler2mat(0, 0, angle_radians)
             set_rotate(parcel_prim, rot_mat)
 
-robot_usd_path = '/home/milos/row-following/IsaacSimulation/spesbot/spesbot.usda'
+robot_usd_path = '/home/milos/row-following/row_following_isaac/data/USDs/spesbot.usda'
 robot_prim_path = "/World/spesbot"
 stage_utils.add_reference_to_stage(robot_usd_path, robot_prim_path)
 
