@@ -1,0 +1,14 @@
+# train: /home/milos/row-following/ros2_ws/Dataset/train/images
+# val: /home/milos/row-following/ros2_ws/Dataset/valid/images
+# test: /home/milos/row-following/ros2_ws/Dataset/test/images
+
+# nc: 2
+# names: ['CilantroOm', 'Ground']
+path: /home/milos/row-following/ros2_ws/Dataset
+
+train: train/images
+val: valid/images
+test: test/images
+
+nc: 2
+names: ['CilantroOm', 'Ground']
