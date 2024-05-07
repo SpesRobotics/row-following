@@ -9,7 +9,7 @@ from ament_index_python.packages import get_package_share_directory
 def generate_launch_description():
     # Get the directory path of spesbot_isaac
     package_dir = get_package_share_directory("spesbot_isaac")
-    launch_file = os.path.join(package_dir, 'launch', 'isaac.launch.py')
+    launch_file = os.path.join(package_dir, 'launch', 'isaac_launch.py')
 
     # Declare simulation argument
     sim_arg = DeclareLaunchArgument(
