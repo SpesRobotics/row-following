@@ -18,7 +18,7 @@ from ultralytics import YOLO
 # yolo_model_path = '/home/milos/row-following/ros2_ws/Dataset/best.pt'
 # yolo_model_path = '/home/milos/row-following/ros2_ws/Dataset/runs/detect/train9/weights/best.pt'
 #yolo_model_path = '/home/pilaciv/Workspaces/row-following/src/best.pt'
-yolo_model_path = '/home/milos/row-following/ros2_ws/src/row_following_bringup/row_following_bringup/best.pt'
+yolo_model_path = '/home/milos/Workspaces/row-following/ros2_ws/Dataset/best.pt'
 
 
 classNames = ['Ground', 'CilantroOm']

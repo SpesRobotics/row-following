@@ -8,7 +8,7 @@
             }
             dictionary Perspective = {
                 double3 position = (5.553482975888357, 1.3641375362965606, 2.042508621286678)
-                double3 target = (1.6182314969352052, 0.8025927789551142, -0.5164799472293797)
+                double3 target = (1.6182314969352043, 0.8025927789551139, -0.5164799472293802)
             }
             dictionary Right = {
                 double3 position = (0, -5, 0)
@@ -6083,8 +6083,11 @@ def Xform "World"
     }
 
     def Xform "spesbot" (
-        delete references = @./spesbot/spesbot.usda@
-        prepend references = @../spesbot/spesbot.usda@
+        delete references = [
+            @./spesbot/spesbot.usda@,
+            @../spesbot/spesbot.usda@
+        ]
+        prepend references = @./spesbot.usda@
     )
     {
         quatd xformOp:orient = (1, 0, 0, 0)
@@ -6301,7 +6304,7 @@ def cleanup(db: og.Database):
 
 def compute(db: og.Database):
     return True"""
-            custom token inputs:scriptPath = "../src/isaac_randomize_cam_pos.py"
+            custom token inputs:scriptPath = "../scripts/isaac_randomize_cam_pos.py"
             custom bool inputs:usePath = 1
             token node:type = "omni.graph.scriptnode.ScriptNode"
             int node:typeVersion = 2

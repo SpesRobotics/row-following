@@ -7,8 +7,8 @@
                 double radius = 5
             }
             dictionary Perspective = {
-                double3 position = (0.3807397740605837, -0.45353658694783405, 0.2890212691178732)
-                double3 target = (-0.1367216329412162, 0.24674073695092957, 0.04145778279294143)
+                double3 position = (0.3828844709342712, -0.5310483242353968, 0.2600701041063884)
+                double3 target = (-0.16502832620966906, 0.21043867773634628, -0.002061912750526973)
             }
             dictionary Right = {
                 double3 position = (0, -5, 0)
@@ -85,7 +85,11 @@
 def Xform "World"
 {
     def "persun_isaac" (
-        delete references = @file:/home/milos/row-following/Simulation/persun_isaac.usd@
+        delete references = [
+            @file:/home/milos/row-following/Simulation/persun_isaac.usd@,
+            @./persun_isaac.usd@,
+            @./persun_scaled.usda@
+        ]
         prepend references = @./persun_isaac.usd@
     )
     {
@@ -94,7 +98,9 @@ def Xform "World"
         double3 xformOp:translate = (0, 0, 0)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
 
-        over "persunovo"
+        over "persunovo" (
+            prepend references = @./persun_pravi.usdc@
+        )
         {
             over "Camera" (
                 active = false
