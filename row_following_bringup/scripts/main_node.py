@@ -16,7 +16,9 @@ import time
 
 from ultralytics import YOLO
 
-directory_path = '/home/milos/row-following/ros2_ws/Dataset/Images' # Path to save the dataset
+directory_path = '/home/milos/row-following/ros2_ws/Dataset/Images' # Path to the save the dataset
+# yolo_model_path = '/home/milos/row-following/ros2_ws/Dataset/best.pt'
+yolo_model_path = '/home/milos/row-following/ros2_ws/Dataset/runs/detect/train9/weights/best.pt'
 
 classNames = ['Ground', 'CilantroOm']
 
@@ -147,6 +149,8 @@ class MainNode(Node):
         self.image_counter = 1
         self.max_images = 300
         self.run_node = True  # For executing the program
+        # self.model = YOLO('/home/milos/row-following/ros2_ws/Dataset/yolov8n.pt')
+        self.model = YOLO(yolo_model_path)
         self.get_logger().info('Collecting Simulation Dataset!')
 
     def publish_message(self):

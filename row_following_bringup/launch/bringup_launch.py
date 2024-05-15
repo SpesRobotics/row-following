@@ -24,14 +24,24 @@ def generate_launch_description():
             PythonLaunchDescriptionSource(launch_file),
             launch_arguments={'sim': LaunchConfiguration('sim')}.items()
         ),
+        # Node(
+        #     package='row_following_bringup',
+        #     executable='row_follow.py',
+        #     output='screen'
+        # ),
         Node(
-            package='row_following_bringup',
-            executable='row_follow.py',
+            package='spesbot_isaac',
+            executable='tf2navsatfix.py',
             output='screen'
         ),
         Node(
-            package='row_following_bringup',
+            package='spesbot_isaac',
             executable='navsatfix2tf.py',
             output='screen'
-        )
+        ),
+        # Node(
+        #     package='row_following_bringup',
+        #     executable='nav2_test.py',
+        #     output='screen'
+        # )
     ])
