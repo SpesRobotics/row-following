@@ -77,6 +77,8 @@ def compute(db: og.Database):
     rot_mat = transforms3d.euler.euler2mat(roll_angle_radians, pitch_angle_radians, yaw_angle_radians)
     set_rotate(parcel_prim, rot_mat)
 
-    translate = Gf.Vec3d(random.uniform(-0.2, 1.4), random.uniform(0.4, 2.2), random.uniform(0.49, 0.51))
+    # translate = Gf.Vec3d(random.uniform(-0.2, 1.4), random.uniform(0.4, 2.2), random.uniform(0.49, 0.51))
+    translate = Gf.Vec3d(random.uniform(-0.5, 3.5), random.uniform(-0.2, 2.2), random.uniform(0.49, 0.51))
+
     set_translate(parcel_prim, translate)
     return True

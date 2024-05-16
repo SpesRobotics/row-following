@@ -86,6 +86,9 @@ set_rotate(parcel_prim, rot_mat)
 
 # translate = Gf.Vec3d(random.uniform(-0.2, 1.4), random.uniform(0.6, 2.2), random.uniform(0.39, 0.41))
 translate = Gf.Vec3d(random.uniform(-0.2, 1.4), random.uniform(0.4, 2.2), random.uniform(0.49, 0.51))
+
+# translate = Gf.Vec3d(random.uniform(-0.5, 3.5), random.uniform(-0.2, 2.2), random.uniform(0.49, 0.51))
+
 set_translate(parcel_prim, translate)
 
 #RANDOM POSITIONS(20x12)

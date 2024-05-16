@@ -16,8 +16,11 @@ import time
 
 from ultralytics import YOLO
 
-directory_path = '/home/milos/row-following/ros2_ws/Dataset/Images' # Path to the save the dataset
+# directory_path = '/home/milos/row-following/ml/Images' # Path to the save the dataset
+directory_path = '/home/pilaciv/Workspaces/row-following/ml/Images' # Path to the save the dataset
+
 # yolo_model_path = '/home/milos/row-following/ros2_ws/Dataset/best.pt'
+
 yolo_model_path = '/home/milos/row-following/ros2_ws/Dataset/runs/detect/train9/weights/best.pt'
 
 classNames = ['Ground', 'CilantroOm']
@@ -131,7 +134,7 @@ def draw_bounding_boxes(gray_image, min_area, fname):
 class MainNode(Node):
     def __init__(self):
         super().__init__('main_node_node')
-        self.publisher_ = self.create_publisher(Twist, 'cmd_vel', 1)
+        self.publisher_ = self.create_publisher(Twist, 'isaac/dataset', 1)
         self.image_subscription = self.create_subscription(
             Image,
             '/rgb',
@@ -147,10 +150,10 @@ class MainNode(Node):
         self.save_success = False
         self.save_success2 = False
         self.image_counter = 1
-        self.max_images = 300
+        self.max_images = 100
         self.run_node = True  # For executing the program
         # self.model = YOLO('/home/milos/row-following/ros2_ws/Dataset/yolov8n.pt')
-        self.model = YOLO(yolo_model_path)
+        # self.model = YOLO(yolo_model_path)
         self.get_logger().info('Collecting Simulation Dataset!')
 
     def publish_message(self):
@@ -183,34 +186,34 @@ class MainNode(Node):
             self.get_logger().info('Simulation Dataset Collected!')
             self.run_node = False
 
-        results = self.model(cropped_rgb_image)
+        # results = self.model(cropped_rgb_image)
 
-        for r in results:
-            boxes = r.boxes
-            for box in boxes:
-                x1, y1, x2, y2 = box.xyxy[0]
-                x1, y1, x2, y2 = int(x1), int(y1), int(x2), int(y2)
+        # for r in results:
+        #     boxes = r.boxes
+        #     for box in boxes:
+        #         x1, y1, x2, y2 = box.xyxy[0]
+        #         x1, y1, x2, y2 = int(x1), int(y1), int(x2), int(y2)
 
-                w, h = x2 - x1, y2 - y1
+        #         w, h = x2 - x1, y2 - y1
 
-                conf = math.ceil((box.conf[0] * 100)) / 100
+        #         conf = math.ceil((box.conf[0] * 100)) / 100
 
-                cls = int(box.cls[0])
+        #         cls = int(box.cls[0])
 
-                class_colors = {
-                    0: (255, 0, 0),   # Blue for 'CilantroOm'
-                    1: (0, 255, 0)    # Green for 'Ground'
-                }
-                color = class_colors.get(cls, (0, 0, 255))  # Default to red if class not found
+        #         class_colors = {
+        #             0: (255, 0, 0),   # Blue for 'CilantroOm'
+        #             1: (0, 255, 0)    # Green for 'Ground'
+        #         }
+        #         color = class_colors.get(cls, (0, 0, 255))  # Default to red if class not found
 
-                cv2.rectangle(cropped_rgb_image, (x1, y1), (x1 + w, y1 + h), color, 2)
-                cv2.putText(cropped_rgb_image, f'{classNames[cls]} {conf}', (max(0, x1), max(35, y1)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
-
-
+        #         cv2.rectangle(cropped_rgb_image, (x1, y1), (x1 + w, y1 + h), color, 2)
+        #         cv2.putText(cropped_rgb_image, f'{classNames[cls]} {conf}', (max(0, x1), max(35, y1)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
 
 
-        cv2.imshow("YOLO Output", cropped_rgb_image)
-        cv2.waitKey(1)
+
+
+        # cv2.imshow("YOLO Output", cropped_rgb_image)
+        # cv2.waitKey(1)
 
     def segmentation_callback(self, msg):
         if int(self.msg.linear.x) < self.max_images:
