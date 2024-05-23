@@ -7,18 +7,18 @@
                 double radius = 5
             }
             dictionary Perspective = {
-                double3 position = (5.553482975888357, 1.3641375362965606, 2.042508621286678)
-                double3 target = (1.6182314969352043, 0.8025927789551139, -0.5164799472293802)
+                double3 position = (-0.5507670430103332, 0.6113274701156497, 0.4028925732716156)
+                double3 target = (4.625774850739992, 1.2832273730587311, -0.32679856991354345)
             }
             dictionary Right = {
                 double3 position = (0, -5, 0)
                 double radius = 5
             }
             dictionary Top = {
-                double3 position = (1.107225279374555, 1.163287318836559, 5)
+                double3 position = (1.9361155467721045, 1.163287318836559, 5)
                 double radius = 4.470947647094727
             }
-            string boundCamera = "/OmniverseKit_Persp"
+            string boundCamera = "/World/Camera"
         }
         dictionary navmeshSettings = {
             double agentHeight = 180
@@ -6090,6 +6090,7 @@ def Xform "World"
         prepend references = @./spesbot.usda@
     )
     {
+        token visibility = "invisible"
         quatd xformOp:orient = (1, 0, 0, 0)
         double3 xformOp:scale = (1, 1, 1)
         double3 xformOp:translate = (0, 0.5299999713897705, 0)
@@ -6132,6 +6133,49 @@ def Xform "World"
             {
             }
         }
+
+        over "ActionGraph"
+        {
+            def OmniGraphNode "ros2_publish_transform_tree" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom uint64 inputs:context
+                custom uint inputs:execIn
+                prepend uint inputs:execIn.connect = </World/spesbot/ActionGraph/on_playback_tick.outputs:tick>
+                custom string inputs:nodeNamespace
+                custom rel inputs:parentPrim = </World> (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                custom uint64 inputs:queueSize
+                custom rel inputs:targetPrims = </World/spesbot/spesbot_raw/base_link> (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                custom double inputs:timeStamp
+                custom string inputs:topicName = "isaac/tf"
+                token node:type = "omni.isaac.ros2_bridge.ROS2PublishTransformTree"
+                int node:typeVersion = 1
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (381.74792, 732.7786)
+            }
+
+            over "isaac_read_simulation_time"
+            {
+                uniform float2 ui:nodegraph:node:pos = (-25.450583, 577.7904)
+            }
+        }
     }
 
     def OmniGraph "ActionGraph"
@@ -6171,7 +6215,7 @@ def Xform "World"
             prepend apiSchemas = ["NodeGraphNodeAPI"]
         )
         {
-            custom rel inputs:cameraPrim = </World/spesbot/spesbot_raw/base_link/Camera> (
+            custom rel inputs:cameraPrim = </World/Camera> (
                 customData = {
                     dictionary omni = {
                         dictionary graph = {
@@ -6259,9 +6303,10 @@ def Xform "World"
         {
             custom uint64 inputs:context
             custom uint inputs:execIn
+            prepend uint inputs:execIn.connect = </World/ActionGraph/on_tick.outputs:tick>
             custom string inputs:nodeNamespace
             custom uint64 inputs:queueSize
-            custom string inputs:topicName = "cmd_vel"
+            custom string inputs:topicName = "isaac/dataset"
             token node:type = "omni.isaac.ros2_bridge.ROS2SubscribeTwist"
             int node:typeVersion = 1
             custom vector3d outputs:angularVelocity
@@ -6317,6 +6362,17 @@ def compute(db: og.Database):
             uniform token ui:nodegraph:node:expansionState = "open"
             uniform float2 ui:nodegraph:node:pos = (443.537, 697.0367)
         }
+    }
+
+    def Camera "Camera"
+    {
+        float2 clippingRange = (0.01, 10000000)
+        float focalLength = 18.147562
+        float focusDistance = 400
+        quatd xformOp:orient = (0.7031032652407507, 0.17237101103803806, -0.2754590041044056, -0.632500094876932)
+        double3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (0.8444214721088079, 1.5895287035580083, 0.4998939788057263)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
     }
 }
 

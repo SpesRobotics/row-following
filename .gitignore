@@ -1,1 +1,6 @@
 /ml/Images
+/row_following_bringup/resource/*.mp4
+/row_following_bringup/scripts/hf.py
+/row_following_bringup/scripts/analize.py
+/row_following_bringup/scripts/*.png
+/row_following_bringup/scripts/__pycache__
