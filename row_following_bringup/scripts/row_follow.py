@@ -182,29 +182,28 @@ class RowFollow(Node):
                 for line in lines:
                     x1, y1, x2, y2 = line[0]
                     angle = np.arctan2(y2 - y1, x2 - x1) * 180 / np.pi
-                    # print(angle)
-                    if 60 <= np.abs(angle) <= 90:  # Filter mostly vertical lines
-                        # cv2.line(img2, (x1, y1), (x2, y2), (0, 255, 0), 2)
-                        # continue
+
+                    if -90 <= angle <= -60:  # Filter mostly vertical lines
                         diff1 = abs(x1 - target_x1_1)
-                        diff2 = abs(x1 - target_x1_2)
-                        
                         if diff1 < min_diff1:
                             min_diff1 = diff1
                             line1 = line[0]
-                        
+
+                    if 60 <= angle <= 90:
+                        diff2 = abs(x1 - target_x1_2)
                         if diff2 < min_diff2:
                             min_diff2 = diff2
                             line2 = line[0]
+
             if line1 is not None and line2 is not None:
                 x1_1, y1_1, x2_1, y2_1 = line1
+                line1 = None
                 x1_1 = x1_1 - 90
                 x2_1 = x2_1 - 90
                 cv2.line(rgb_image, (x1_1, y1_1), (x2_1, y2_1), (0, 255, 0), 2)
                 # x1_2, y1_2, x2_2, y2_2 = line2
                 x2_2, y2_2, x1_2, y1_2 = line2
-                print(line1)
-                print(line2)
+                line2 = None
                 cv2.line(rgb_image, (x1_2, y1_2), (x2_2, y2_2), (0, 255, 0), 2)
 
                 x1_center = int((x1_1 + x1_2) / 2)
@@ -278,9 +277,27 @@ class RowFollow(Node):
 
         elif self.mode == 'ht':
             gray_image = cv2.cvtColor(rgb_image, cv2.COLOR_BGR2GRAY)
-            blurred_img = cv2.GaussianBlur(gray_image, (305, 305), 0) #105 105 (155 155 sa 100 100)
-            edges = cv2.Canny(blurred_img, 1, 900, apertureSize=7) # 5, 6
-            lines = cv2.HoughLinesP(edges, 1, np.pi / 180, 100, minLineLength=700, maxLineGap=50)
+            blurred_img = cv2.GaussianBlur(gray_image, (199, 195), 0) #105 105 (155 155 sa 100 100)
+            adaptive_thresh_mean = cv2.adaptiveThreshold(
+                blurred_img,
+                maxValue=255,
+                adaptiveMethod=cv2.ADAPTIVE_THRESH_MEAN_C,
+                thresholdType=cv2.THRESH_BINARY,
+                blockSize=255,
+                C=3
+            )
+            edges = cv2.Canny(adaptive_thresh_mean, 700, 700, apertureSize=5) # 5, 6
+            lines = cv2.HoughLinesP(edges, 1, np.pi / 180, 10, minLineLength=400, maxLineGap=170)
+            # blurred_img = cv2.GaussianBlur(gray_image, (105, 105), 0) #105 105 (155 155 sa 100 100)
+            # kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (17, 17))
+            # closed_image = cv2.morphologyEx(edges, cv2.MORPH_CLOSE, kernel)
+            # lines = cv2.HoughLinesP(closed_image, 1, np.pi / 180, 100, minLineLength=200, maxLineGap=20)
+
+            # blurred_img = cv2.GaussianBlur(gray_image, (105, 105), 0) #105 105 (155 155 sa 100 100)
+            # edges = cv2.Canny(blurred_img, 70, 120, apertureSize=5) # 5, 6
+            # kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (17, 17))
+            # closed_image = cv2.morphologyEx(edges, cv2.MORPH_CLOSE, kernel)
+            # lines = cv2.HoughLinesP(edges, 1, np.pi / 180, 100, minLineLength=0, maxL
             line1 = None
             line2 = None
             min_diff1 = 150
@@ -295,26 +312,27 @@ class RowFollow(Node):
                     x1, y1, x2, y2 = line[0]
                     angle = np.arctan2(y2 - y1, x2 - x1) * 180 / np.pi
                     # print(angle)
-                    if 60 <= np.abs(angle) <= 90:  # Filter mostly vertical lines
-                        # cv2.line(img2, (x1, y1), (x2, y2), (0, 255, 0), 2)
-                        # continue
+                    if -90 <= angle <= -60:  # Filter mostly vertical lines
                         diff1 = abs(x1 - target_x1_1)
-                        diff2 = abs(x1 - target_x1_2)
-                        
                         if diff1 < min_diff1:
                             min_diff1 = diff1
                             line1 = line[0]
-                        
+
+                    if 60 <= angle <= 90:
+                        diff2 = abs(x1 - target_x1_2)
                         if diff2 < min_diff2:
                             min_diff2 = diff2
                             line2 = line[0]
+
             if line1 is not None and line2 is not None:
                 x1_1, y1_1, x2_1, y2_1 = line1
+                line1 = None
                 x1_1 = x1_1 - 90
                 x2_1 = x2_1 - 90
                 cv2.line(rgb_image, (x1_1, y1_1), (x2_1, y2_1), (0, 255, 0), 2)
                 # x1_2, y1_2, x2_2, y2_2 = line2
                 x2_2, y2_2, x1_2, y1_2 = line2
+                line2 = None
                 print(line1)
                 print(line2)
                 cv2.line(rgb_image, (x1_2, y1_2), (x2_2, y2_2), (0, 255, 0), 2)
