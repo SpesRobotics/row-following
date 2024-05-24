@@ -7,7 +7,7 @@ import cv2
 class VideoPublisher(Node):
     def __init__(self):
         super().__init__('video_publisher')
-        self.publisher_ = self.create_publisher(Image, 'video/rgb', 10)
+        self.publisher_ = self.create_publisher(Image, '/video/rgb', 10)
         timer_period = 0.1  # seconds
         self.timer = self.create_timer(timer_period, self.timer_callback)
         video_path = 'row_following_bringup/resource/wide1.mp4'  # Update this to the path of your video file
@@ -25,7 +25,7 @@ class VideoPublisher(Node):
         height, width, channels = resized_frame.shape
         cropped_rgb_image = resized_frame[int((height / 2) - 40): int((height / 2) + 40), :]
         if ret:
-            msg = self.bridge.cv2_to_imgmsg(cropped_rgb_image, 'bgr8')
+            msg = self.bridge.cv2_to_imgmsg(resized_frame, 'bgr8')
             self.publisher_.publish(msg)
             self.get_logger().info('Publishing video frame')
         else:
