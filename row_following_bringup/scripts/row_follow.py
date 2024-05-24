@@ -200,11 +200,11 @@ class RowFollow(Node):
                 line1 = None
                 x1_1 = x1_1 - 90
                 x2_1 = x2_1 - 90
-                cv2.line(rgb_image, (x1_1, y1_1), (x2_1, y2_1), (0, 255, 0), 2)
+                cv2.line(rgb_image, (x1_1, y1_1), (x2_1, y2_1), (255, 0, 0), 2)
                 # x1_2, y1_2, x2_2, y2_2 = line2
                 x2_2, y2_2, x1_2, y1_2 = line2
                 line2 = None
-                cv2.line(rgb_image, (x1_2, y1_2), (x2_2, y2_2), (0, 255, 0), 2)
+                cv2.line(rgb_image, (x1_2, y1_2), (x2_2, y2_2), (255, 0, 0), 2)
 
                 x1_center = int((x1_1 + x1_2) / 2)
                 x2_center = int((x2_1 + x2_2) / 2)
@@ -213,7 +213,7 @@ class RowFollow(Node):
                 
                 print(y1_center, y1_1, y1_2)
                 print(y2_center, y2_1, y2_2)
-                cv2.line(rgb_image, (x1_center, y1_center), (x2_center, y2_center), (0, 255, 0), 2)
+                cv2.line(rgb_image, (x1_center, y1_center), (x2_center, y2_center), (255, 0, 0), 2)
                 
                 self.ground_center_coordinates.append(((x1_center + x2_center) // 2, (y1_center + y2_center) // 2))
 
@@ -289,7 +289,7 @@ class RowFollow(Node):
             # edges = cv2.Canny(adaptive_thresh_mean, 700, 700, apertureSize=5) # 5, 6
             lines = cv2.HoughLinesP(inverted_image, 1, np.pi / 180, 10, minLineLength=500, maxLineGap=90)
             gray_image = cv2.cvtColor(rgb_image, cv2.COLOR_BGR2GRAY)
-            
+
             # blurred_img = cv2.GaussianBlur(gray_image, (199, 195), 0) #105 105 (155 155 sa 100 100)
             # adaptive_thresh_mean = cv2.adaptiveThreshold(
             #     blurred_img,
@@ -343,13 +343,13 @@ class RowFollow(Node):
                 line1 = None
                 x1_1 = x1_1 - 90
                 x2_1 = x2_1 - 90
-                cv2.line(rgb_image, (x1_1, y1_1), (x2_1, y2_1), (0, 255, 0), 2)
+                cv2.line(rgb_image, (x1_1, y1_1), (x2_1, y2_1), (255, 0, 0), 2)
                 # x1_2, y1_2, x2_2, y2_2 = line2
                 x2_2, y2_2, x1_2, y1_2 = line2
                 line2 = None
                 print(line1)
                 print(line2)
-                cv2.line(rgb_image, (x1_2, y1_2), (x2_2, y2_2), (0, 255, 0), 2)
+                cv2.line(rgb_image, (x1_2, y1_2), (x2_2, y2_2), (255, 0, 0), 2)
 
                 x1_center = int((x1_1 + x1_2) / 2)
                 x2_center = int((x2_1 + x2_2) / 2)
@@ -358,7 +358,7 @@ class RowFollow(Node):
                 
                 print(y1_center, y1_1, y1_2)
                 print(y2_center, y2_1, y2_2)
-                cv2.line(rgb_image, (x1_center, y1_center), (x2_center, y2_center), (0, 255, 0), 2)
+                cv2.line(rgb_image, (x1_center, y1_center), (x2_center, y2_center), (255, 0, 0), 2)
                 self.ground_center_coordinates.append(((x1_center + x2_center) // 2, (y1_center + y2_center) // 2))
 
             if self.ground_center_coordinates:
