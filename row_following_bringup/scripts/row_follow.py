@@ -169,12 +169,28 @@ class RowFollow(Node):
             blurred_img = cv2.GaussianBlur(gray_image, (305, 305), 0) #105 105 (155 155 sa 100 100)
             edges = cv2.Canny(blurred_img, 1, 900, apertureSize=7) # 5, 6
             lines = cv2.HoughLinesP(edges, 1, np.pi / 180, 100, minLineLength=700, maxLineGap=50)
+            
+            # gray_image = cv2.cvtColor(rgb_image, cv2.COLOR_BGR2GRAY)
+            
+            # blurred_img = cv2.GaussianBlur(gray_image, (205, 205), 0) #105 105 (155 155 sa 100 100)
+            # adaptive_thresh_mean = cv2.adaptiveThreshold(
+            #     blurred_img,
+            #     maxValue=255,
+            #     adaptiveMethod=cv2.ADAPTIVE_THRESH_MEAN_C,
+            #     thresholdType=cv2.THRESH_BINARY,
+            #     blockSize=355,
+            #     C=3
+            # )
+            # inverted_image = cv2.bitwise_not(adaptive_thresh_mean)
+            # # edges = cv2.Canny(adaptive_thresh_mean, 700, 700, apertureSize=5) # 5, 6
+            # lines = cv2.HoughLinesP(inverted_image, 1, np.pi / 180, 10, minLineLength=500, maxLineGap=90)
+            
             line1 = None
             line2 = None
             min_diff1 = 150
             min_diff2 = 150
             # Target x1 values
-            target_x1_1 = 380
+            target_x1_1 = 340
             target_x1_2 = 820
 
             # Find the closest lines to the target x1 values
@@ -229,7 +245,7 @@ class RowFollow(Node):
         if self.mode == 'turn':
             return
 
-        cmd_vel.linear.x = 0.5
+        cmd_vel.linear.x = 0.1
         cmd_vel.angular.z = output
         self.publisher_.publish(cmd_vel)
 
@@ -276,6 +292,7 @@ class RowFollow(Node):
             cv2.waitKey(1)
 
         elif self.mode == 'ht':
+            gray_image = cv2.cvtColor(rgb_image, cv2.COLOR_BGR2GRAY)
             blurred_img = cv2.GaussianBlur(gray_image, (225, 225), 0) #105 105 (155 155 sa 100 100)
             adaptive_thresh_mean = cv2.adaptiveThreshold(
                 blurred_img,
@@ -288,8 +305,6 @@ class RowFollow(Node):
             inverted_image = cv2.bitwise_not(adaptive_thresh_mean)
             # edges = cv2.Canny(adaptive_thresh_mean, 700, 700, apertureSize=5) # 5, 6
             lines = cv2.HoughLinesP(inverted_image, 1, np.pi / 180, 10, minLineLength=500, maxLineGap=90)
-            gray_image = cv2.cvtColor(rgb_image, cv2.COLOR_BGR2GRAY)
-
             # blurred_img = cv2.GaussianBlur(gray_image, (199, 195), 0) #105 105 (155 155 sa 100 100)
             # adaptive_thresh_mean = cv2.adaptiveThreshold(
             #     blurred_img,
