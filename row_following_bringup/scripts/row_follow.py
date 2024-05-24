@@ -315,7 +315,7 @@ class RowFollow(Node):
             #     C=3
             # )
             # edges = cv2.Canny(adaptive_thresh_mean, 700, 700, apertureSize=5) # 5, 6
-            # lines = cv2.HoughLinesP(edges, 1, np.pi / 180, 10, minLineLength=400, maxLineGap=170)
+            # lines = cv2.HoughLinesP(edges, 1, np.pi / 180, 10, minLineLength=400, maxLineGap=300)
 
             # blurred_img = cv2.GaussianBlur(gray_image, (105, 105), 0) #105 105 (155 155 sa 100 100)
             # kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (17, 17))
