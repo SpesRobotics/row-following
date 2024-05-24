@@ -276,18 +276,32 @@ class RowFollow(Node):
             cv2.waitKey(1)
 
         elif self.mode == 'ht':
-            gray_image = cv2.cvtColor(rgb_image, cv2.COLOR_BGR2GRAY)
-            blurred_img = cv2.GaussianBlur(gray_image, (199, 195), 0) #105 105 (155 155 sa 100 100)
+            blurred_img = cv2.GaussianBlur(gray_image, (225, 225), 0) #105 105 (155 155 sa 100 100)
             adaptive_thresh_mean = cv2.adaptiveThreshold(
                 blurred_img,
                 maxValue=255,
                 adaptiveMethod=cv2.ADAPTIVE_THRESH_MEAN_C,
                 thresholdType=cv2.THRESH_BINARY,
-                blockSize=255,
+                blockSize=335,
                 C=3
             )
-            edges = cv2.Canny(adaptive_thresh_mean, 700, 700, apertureSize=5) # 5, 6
-            lines = cv2.HoughLinesP(edges, 1, np.pi / 180, 10, minLineLength=400, maxLineGap=170)
+            inverted_image = cv2.bitwise_not(adaptive_thresh_mean)
+            # edges = cv2.Canny(adaptive_thresh_mean, 700, 700, apertureSize=5) # 5, 6
+            lines = cv2.HoughLinesP(inverted_image, 1, np.pi / 180, 10, minLineLength=500, maxLineGap=90)
+            gray_image = cv2.cvtColor(rgb_image, cv2.COLOR_BGR2GRAY)
+            
+            # blurred_img = cv2.GaussianBlur(gray_image, (199, 195), 0) #105 105 (155 155 sa 100 100)
+            # adaptive_thresh_mean = cv2.adaptiveThreshold(
+            #     blurred_img,
+            #     maxValue=255,
+            #     adaptiveMethod=cv2.ADAPTIVE_THRESH_MEAN_C,
+            #     thresholdType=cv2.THRESH_BINARY,
+            #     blockSize=255,
+            #     C=3
+            # )
+            # edges = cv2.Canny(adaptive_thresh_mean, 700, 700, apertureSize=5) # 5, 6
+            # lines = cv2.HoughLinesP(edges, 1, np.pi / 180, 10, minLineLength=400, maxLineGap=170)
+
             # blurred_img = cv2.GaussianBlur(gray_image, (105, 105), 0) #105 105 (155 155 sa 100 100)
             # kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (17, 17))
             # closed_image = cv2.morphologyEx(edges, cv2.MORPH_CLOSE, kernel)

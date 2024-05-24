@@ -13,6 +13,7 @@ class VideoPublisher(Node):
         video_path = 'row_following_bringup/resource/wide1.mp4'  # Update this to the path of your video file
         self.cap = cv2.VideoCapture(video_path)
         self.bridge = CvBridge()
+        self.get_logger().info('Publishing video frame')
 
     def timer_callback(self):
         ret, frame = self.cap.read()
@@ -27,7 +28,7 @@ class VideoPublisher(Node):
         if ret:
             msg = self.bridge.cv2_to_imgmsg(resized_frame, 'bgr8')
             self.publisher_.publish(msg)
-            self.get_logger().info('Publishing video frame')
+            # self.get_logger().info('Publishing video frame')
         else:
             self.get_logger().warn('Failed to read frame from video. Stopping the timer.')
             self.timer.cancel()

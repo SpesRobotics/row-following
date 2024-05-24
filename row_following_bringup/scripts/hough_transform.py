@@ -50,23 +50,35 @@ class ImageProcessor(Node):
         #     blockSize=155,
         #     C=3
         # )
-        blurred_img = cv2.GaussianBlur(gray_image, (199, 195), 0) #105 105 (155 155 sa 100 100)
+        #DOBAR
+        # blurred_img = cv2.GaussianBlur(gray_image, (199, 195), 0) #105 105 (155 155 sa 100 100)
+        # adaptive_thresh_mean = cv2.adaptiveThreshold(
+        #     blurred_img,
+        #     maxValue=255,
+        #     adaptiveMethod=cv2.ADAPTIVE_THRESH_MEAN_C,
+        #     thresholdType=cv2.THRESH_BINARY,
+        #     blockSize=255,
+        #     C=3
+        # )
+        # edges = cv2.Canny(adaptive_thresh_mean, 700, 700, apertureSize=5) # 5, 6
+        # lines = cv2.HoughLinesP(adaptive_thresh_mean, 1, np.pi / 180, 10, minLineLength=500, maxLineGap=70)
+        blurred_img = cv2.GaussianBlur(gray_image, (225, 225), 0) #105 105 (155 155 sa 100 100)
         adaptive_thresh_mean = cv2.adaptiveThreshold(
             blurred_img,
             maxValue=255,
             adaptiveMethod=cv2.ADAPTIVE_THRESH_MEAN_C,
             thresholdType=cv2.THRESH_BINARY,
-            blockSize=255,
+            blockSize=335,
             C=3
         )
+        inverted_image = cv2.bitwise_not(adaptive_thresh_mean)
+        # edges = cv2.Canny(adaptive_thresh_mean, 700, 700, apertureSize=5) # 5, 6
+        lines = cv2.HoughLinesP(inverted_image, 1, np.pi / 180, 10, minLineLength=500, maxLineGap=90)
 
-        edges = cv2.Canny(adaptive_thresh_mean, 700, 700, apertureSize=5) # 5, 6
-
-        lines = cv2.HoughLinesP(edges, 1, np.pi / 180, 10, minLineLength=400, maxLineGap=170)
         line1 = None
         line2 = None
-        min_diff1 = 150
-        min_diff2 = 150
+        min_diff1 = 250
+        min_diff2 = 250
         target_x1_1 = 380
         target_x1_2 = 820
         # if lines is not None:
@@ -79,7 +91,7 @@ class ImageProcessor(Node):
             for line in lines:
                 x1, y1, x2, y2 = line[0]
                 angle = np.arctan2(y2 - y1, x2 - x1) * 180 / np.pi
-                print(f'Angle: {angle}')
+                # print(f'Angle: {angle}')
                 if -90 <= angle <= -60:  # Filter mostly vertical lines
                     diff1 = abs(x1 - target_x1_1)
                     if diff1 < min_diff1:
@@ -91,8 +103,8 @@ class ImageProcessor(Node):
                     if diff2 < min_diff2:
                         min_diff2 = diff2
                         line2 = line[0]
-            print("Line1:", line1)
-            print("Line2:", line2)
+            # print("Line1:", line1)
+            # print("Line2:", line2)
 
         if line1 is not None and line2 is not None:
             x1_1, y1_1, x2_1, y2_1 = line1
