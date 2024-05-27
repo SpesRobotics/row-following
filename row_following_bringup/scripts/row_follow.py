@@ -66,6 +66,7 @@ class RowFollow(Node):
             '/video/rgb',
             self.video_callback,
             1)
+        self.publisher = self.create_publisher(Image, '/visualization/rgb', 10)
         self.subscription = self.create_subscription(
             NavSatFix,
             '/navsatfix',
@@ -161,29 +162,32 @@ class RowFollow(Node):
                     output = self.find_angle_diff(cropped_rgb_image, self.ground_center_coordinates)
                     self.ground_center_coordinates.clear()
 
-            cv2.imshow("YOLO Output", cropped_rgb_image)
-            cv2.waitKey(1)
+            processed_image_msg = self.bridge.cv2_to_imgmsg(cropped_rgb_image, encoding='bgr8')
+            self.publisher.publish(processed_image_msg)
+
+            # cv2.imshow("YOLO Output", cropped_rgb_image)
+            # cv2.waitKey(1)
 
         elif self.mode == 'ht':
-            gray_image = cv2.cvtColor(rgb_image, cv2.COLOR_BGR2GRAY)
-            blurred_img = cv2.GaussianBlur(gray_image, (305, 305), 0) #105 105 (155 155 sa 100 100)
-            edges = cv2.Canny(blurred_img, 1, 900, apertureSize=7) # 5, 6
-            lines = cv2.HoughLinesP(edges, 1, np.pi / 180, 100, minLineLength=700, maxLineGap=50)
-            
             # gray_image = cv2.cvtColor(rgb_image, cv2.COLOR_BGR2GRAY)
+            # blurred_img = cv2.GaussianBlur(gray_image, (305, 305), 0) #105 105 (155 155 sa 100 100)
+            # edges = cv2.Canny(blurred_img, 1, 900, apertureSize=7) # 5, 6
+            # lines = cv2.HoughLinesP(edges, 1, np.pi / 180, 100, minLineLength=700, maxLineGap=50)
             
-            # blurred_img = cv2.GaussianBlur(gray_image, (205, 205), 0) #105 105 (155 155 sa 100 100)
-            # adaptive_thresh_mean = cv2.adaptiveThreshold(
-            #     blurred_img,
-            #     maxValue=255,
-            #     adaptiveMethod=cv2.ADAPTIVE_THRESH_MEAN_C,
-            #     thresholdType=cv2.THRESH_BINARY,
-            #     blockSize=355,
-            #     C=3
-            # )
-            # inverted_image = cv2.bitwise_not(adaptive_thresh_mean)
-            # # edges = cv2.Canny(adaptive_thresh_mean, 700, 700, apertureSize=5) # 5, 6
-            # lines = cv2.HoughLinesP(inverted_image, 1, np.pi / 180, 10, minLineLength=500, maxLineGap=90)
+            gray_image = cv2.cvtColor(rgb_image, cv2.COLOR_BGR2GRAY)
+            
+            blurred_img = cv2.GaussianBlur(gray_image, (205, 205), 0) #105 105 (155 155 sa 100 100)
+            adaptive_thresh_mean = cv2.adaptiveThreshold(
+                blurred_img,
+                maxValue=255,
+                adaptiveMethod=cv2.ADAPTIVE_THRESH_MEAN_C,
+                thresholdType=cv2.THRESH_BINARY,
+                blockSize=355,
+                C=3
+            )
+            inverted_image = cv2.bitwise_not(adaptive_thresh_mean)
+            # edges = cv2.Canny(adaptive_thresh_mean, 700, 700, apertureSize=5) # 5, 6
+            lines = cv2.HoughLinesP(inverted_image, 1, np.pi / 180, 10, minLineLength=500, maxLineGap=90)
             
             line1 = None
             line2 = None
@@ -227,8 +231,8 @@ class RowFollow(Node):
                 y1_center = int((y1_1 + y1_2) / 2)
                 y2_center = int((y2_1 + y2_2) / 2)
                 
-                print(y1_center, y1_1, y1_2)
-                print(y2_center, y2_1, y2_2)
+                # print(y1_center, y1_1, y1_2)
+                # print(y2_center, y2_1, y2_2)
                 cv2.line(rgb_image, (x1_center, y1_center), (x2_center, y2_center), (255, 0, 0), 2)
                 
                 self.ground_center_coordinates.append(((x1_center + x2_center) // 2, (y1_center + y2_center) // 2))
@@ -237,15 +241,16 @@ class RowFollow(Node):
                 output = self.find_angle_diff(rgb_image, self.ground_center_coordinates)
                 self.ground_center_coordinates.clear()
 
-
+            processed_image_msg = self.bridge.cv2_to_imgmsg(rgb_image, encoding='bgr8')
+            self.publisher.publish(processed_image_msg)
             # Display the image
-            cv2.imshow('Detected Lines', rgb_image)
-            cv2.waitKey(1)
+            # cv2.imshow('Detected Lines', rgb_image)
+            # cv2.waitKey(1)
 
         if self.mode == 'turn':
             return
 
-        cmd_vel.linear.x = 0.1
+        cmd_vel.linear.x = 0.5
         cmd_vel.angular.z = output
         self.publisher_.publish(cmd_vel)
 
@@ -288,8 +293,10 @@ class RowFollow(Node):
                     output = self.find_angle_diff(cropped_rgb_image, self.ground_center_coordinates)
                     self.ground_center_coordinates.clear()
 
-            cv2.imshow("YOLO Output", cropped_rgb_image)
-            cv2.waitKey(1)
+            processed_image_msg = self.bridge.cv2_to_imgmsg(cropped_rgb_image, encoding='bgr8')
+            self.publisher.publish(processed_image_msg)
+            # cv2.imshow("YOLO Output", cropped_rgb_image)
+            # cv2.waitKey(1)
 
         elif self.mode == 'ht':
             gray_image = cv2.cvtColor(rgb_image, cv2.COLOR_BGR2GRAY)
@@ -380,9 +387,12 @@ class RowFollow(Node):
                 output = self.find_angle_diff(rgb_image, self.ground_center_coordinates)
                 self.ground_center_coordinates.clear()
 
+            processed_image_msg = self.bridge.cv2_to_imgmsg(rgb_image, encoding='bgr8')
+            self.publisher.publish(processed_image_msg)
+
             # Display the image
-            cv2.imshow('Detected Lines', rgb_image)
-            cv2.waitKey(1)
+            # cv2.imshow('Detected Lines', rgb_image)
+            # cv2.waitKey(1)
 
         if self.mode == 'turn':
             return

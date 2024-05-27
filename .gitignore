@@ -4,3 +4,4 @@
 /row_following_bringup/scripts/analize.py
 /row_following_bringup/scripts/*.png
 /row_following_bringup/scripts/__pycache__
+/row_following_bringup/scripts/plot_images.py

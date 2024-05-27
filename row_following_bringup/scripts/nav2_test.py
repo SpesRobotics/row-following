@@ -28,7 +28,7 @@ class FollowPathClient(Node):
 
         self._action_client = ActionClient(self, FollowPath, 'follow_path')
 
-        self._send_goal()   # Now working
+        self.send_goal()   # Now working
         # self.go_forward()
         self.get_logger().info("Path!")
 
@@ -74,10 +74,10 @@ class FollowPathClient(Node):
 
         # Wait until the action server is ready and send the goal
         self._action_client.wait_for_server()
-        self._send_goal_future = self._action_client.send_goal_async(goal_msg)
-        self._send_goal_future.add_done_callback(self.goal_response_callback)
+        self.send_goal_future = self._action_client.send_goal_async(goal_msg)
+        self.send_goal_future.add_done_callback(self.goal_response_callback)
 
-    def _send_goal(self):
+    def send_goal(self):
         # Define the path
         path_msg = Path()
         path_msg.header.frame_id = 'odom'
@@ -120,28 +120,18 @@ class FollowPathClient(Node):
 
                     tf_base_link_point[:3, 3] = np.array([x_offset, translation_y, 0])
 
-                    waypoint = tf_odom_base_link @ tf_base_link_point
-
-                    waypoint_msg_pose = rnp.msgify(Pose, waypoint)
-
-                    waypoint_msg_pose_stamped = PoseStamped()
-                    waypoint_msg_pose_stamped.header.frame_id = 'odom'
-                    waypoint_msg_pose_stamped.pose = waypoint_msg_pose
-
-                    path_msg.poses.append(waypoint_msg_pose_stamped)
-
             else:
                 tf_base_link_point[:3, 3] = np.array([x, translation_y, 0])
 
-                waypoint = tf_odom_base_link @ tf_base_link_point
+            waypoint = tf_odom_base_link @ tf_base_link_point
 
-                waypoint_msg_pose = rnp.msgify(Pose, waypoint)
+            waypoint_msg_pose = rnp.msgify(Pose, waypoint)
 
-                waypoint_msg_pose_stamped = PoseStamped()
-                waypoint_msg_pose_stamped.header.frame_id = 'odom'
-                waypoint_msg_pose_stamped.pose = waypoint_msg_pose
+            waypoint_msg_pose_stamped = PoseStamped()
+            waypoint_msg_pose_stamped.header.frame_id = 'odom'
+            waypoint_msg_pose_stamped.pose = waypoint_msg_pose
 
-                path_msg.poses.append(waypoint_msg_pose_stamped)
+            path_msg.poses.append(waypoint_msg_pose_stamped)
 
         self.path_publisher.publish(path_msg)
 
@@ -151,8 +141,8 @@ class FollowPathClient(Node):
 
         # Wait until the action server is ready and send the goal
         self._action_client.wait_for_server()
-        self._send_goal_future = self._action_client.send_goal_async(goal_msg)
-        self._send_goal_future.add_done_callback(self.goal_response_callback)
+        self.send_goal_future = self._action_client.send_goal_async(goal_msg)
+        self.send_goal_future.add_done_callback(self.goal_response_callback)
 
         # while self.flag is True:
         #     rclpy.spin_once(self)
