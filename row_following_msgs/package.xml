@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package format="3">
-  <name>follow_row_msgs</name>
+  <name>row_following_msgs</name>
   <version>0.0.0</version>
   <description>TODO: Package description</description>
   <maintainer email="nikolicmilos3610@gmail.com">pilaciv</maintainer>

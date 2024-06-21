@@ -16,7 +16,7 @@ find_package(geometry_msgs REQUIRED)
 find_package(tf2_geometry_msgs REQUIRED)
 find_package(nav_msgs REQUIRED)
 find_package(nav2_msgs REQUIRED)
-find_package(follow_row_msgs REQUIRED)
+find_package(row_following_msgs REQUIRED)
 
 # Add executables
 add_executable(behavior src/behavior.cpp)
@@ -24,7 +24,7 @@ ament_target_dependencies(
   behavior
   nav_msgs
   nav2_msgs
-  follow_row_msgs
+  row_following_msgs
   rclcpp
   rclcpp_action
   tf2
@@ -40,7 +40,7 @@ ament_target_dependencies(
   generate_path
   nav_msgs
   nav2_msgs
-  follow_row_msgs
+  row_following_msgs
   tf2_geometry_msgs
   rclcpp
   rclcpp_action
@@ -91,7 +91,7 @@ ament_export_dependencies(
   geometry_msgs
   behaviortree_cpp
   behaviortree_ros2
-  follow_row_msgs
+  row_following_msgs
 )
 
 ament_export_include_directories(

@@ -8,7 +8,7 @@
 #include <tf2_ros/transform_listener.h>
 #include <tf2_geometry_msgs/tf2_geometry_msgs.hpp>
 #include <Eigen/Geometry>
-#include "follow_row_msgs/srv/generate_path.hpp"
+#include "row_following_msgs/srv/generate_path.hpp"
 
 class GeneratePathServiceServer : public rclcpp::Node
 {
@@ -19,7 +19,7 @@ public:
           tf_listener_(tf_buffer_)
     {
         path_publisher_ = this->create_publisher<nav_msgs::msg::Path>("/path", 10);
-        service_ = this->create_service<follow_row_msgs::srv::GeneratePath>(
+        service_ = this->create_service<row_following_msgs::srv::GeneratePath>(
             "generate_path",
             std::bind(&GeneratePathServiceServer::handle_set_path_params, this, std::placeholders::_1, std::placeholders::_2)
         );
@@ -27,8 +27,8 @@ public:
     }
 
 private:
-    void handle_set_path_params(const std::shared_ptr<follow_row_msgs::srv::GeneratePath::Request> request,
-                                std::shared_ptr<follow_row_msgs::srv::GeneratePath::Response> response)
+    void handle_set_path_params(const std::shared_ptr<row_following_msgs::srv::GeneratePath::Request> request,
+                                std::shared_ptr<row_following_msgs::srv::GeneratePath::Response> response)
     {
         arc_radius_ = request->arc_radius;
         line_length_ = request->line_length * 100;
@@ -210,7 +210,7 @@ private:
     }
 
     rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr path_publisher_;
-    rclcpp::Service<follow_row_msgs::srv::GeneratePath>::SharedPtr service_;
+    rclcpp::Service<row_following_msgs::srv::GeneratePath>::SharedPtr service_;
     tf2_ros::Buffer tf_buffer_;
     tf2_ros::TransformListener tf_listener_;
 

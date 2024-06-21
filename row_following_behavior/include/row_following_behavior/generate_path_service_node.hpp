@@ -1,13 +1,13 @@
 #pragma once
 
 #include "behaviortree_ros2/bt_service_node.hpp"
-#include "follow_row_msgs/srv/generate_path.hpp"
+#include "row_following_msgs/srv/generate_path.hpp"
 
-class GeneratePath : public BT::RosServiceNode<follow_row_msgs::srv::GeneratePath>
+class GeneratePath : public BT::RosServiceNode<row_following_msgs::srv::GeneratePath>
 {
 public:
   GeneratePath(const std::string& name, const BT::NodeConfig& conf, const BT::RosNodeParams& params)
-    : BT::RosServiceNode<follow_row_msgs::srv::GeneratePath>(name, conf, params)
+    : BT::RosServiceNode<row_following_msgs::srv::GeneratePath>(name, conf, params)
   {
     setServiceName("generate_path");
   }

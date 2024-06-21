@@ -1,9 +1,9 @@
 #pragma once
 
 #include "behaviortree_ros2/bt_action_node.hpp"
-#include "follow_row_msgs/action/follow_row.hpp"
+#include "row_following_msgs/action/follow_row.hpp"
 
-using FollowRowAction = follow_row_msgs::action::FollowRow;
+using FollowRowAction = row_following_msgs::action::FollowRow;
 
 class FollowRowActionNode : public BT::RosActionNode<FollowRowAction>
 {

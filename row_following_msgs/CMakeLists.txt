@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(follow_row_msgs)
+project(row_following_msgs)
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
