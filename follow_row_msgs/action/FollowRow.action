@@ -1,0 +1,10 @@
+# Goal
+string mode  # 'ml' for machine learning, 'ht' for Hough transform
+
+---
+# Result
+bool success
+
+---
+# Feedback
+string feedback

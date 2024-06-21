@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root BTCPP_format="4" project_name="Project">
+    <include path="test.xml"/>
+    <!-- Description of Node Models (used by Groot) -->
+    <TreeNodesModel>
+        <Action ID="FollowPath" editable="true">
+            <input_port name="waypoints" default="{waypoints}"/>
+        </Action>
+        <Action ID="FollowRow" editable="true">
+            <input_port name="mode" default="{mode}"/>
+        </Action>
+        <Action ID="FollowRowTopicNode" editable="true">
+            <input_port name="mode"/>
+        </Action>
+        <Action ID="GeneratePath" editable="true">
+            <input_port name="arc_radius" default="0.425"/>
+            <input_port name="line_length" default="0.75"/>
+            <input_port name="reference_frame" default="base_link"/>
+            <input_port name="anchor_frame" default="odom"/>
+            <input_port name="turn" default="left"/>
+            <output_port name="waypoints" default="{waypoints}"/>
+        </Action>
+        <Condition ID="IsOutOfField" editable="true">
+            <input_port name="field_coordinates"/>
+        </Condition>
+        <Action ID="TwistPublisher" editable="true">
+            <input_port name="linear_velocity"/>
+            <input_port name="angular_velocity"/>
+        </Action>
+    </TreeNodesModel>
+</root>

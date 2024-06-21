@@ -10,7 +10,8 @@ class VideoPublisher(Node):
         self.publisher_ = self.create_publisher(Image, '/video/rgb', 10)
         timer_period = 0.1  # seconds
         self.timer = self.create_timer(timer_period, self.timer_callback)
-        video_path = 'row_following_bringup/resource/wide1.mp4'  # Update this to the path of your video file
+        # video_path = 'row_following_bringup/resource/wide1.mp4'  # Update this to the path of your video file
+        video_path = '/home/milos/row-following/row_following_bringup/resource/wide1.mp4' 
         self.cap = cv2.VideoCapture(video_path)
         self.bridge = CvBridge()
         self.get_logger().info('Publishing video frame')

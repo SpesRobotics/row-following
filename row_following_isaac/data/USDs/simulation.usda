@@ -7,8 +7,8 @@
                 double radius = 5
             }
             dictionary Perspective = {
-                double3 position = (-1.7754528121238122, 0.5646248889183916, 0.7980508478782984)
-                double3 target = (4.52404328072748, 1.3354484329775609, -0.8276181421462856)
+                double3 position = (-1.2700667364636873, 0.3328404417639623, 0.6341853305669853)
+                double3 target = (4.907055136469011, 0.8220321277050049, -1.4928963524895886)
             }
             dictionary Right = {
                 double3 position = (0, -5, 0)
@@ -18,7 +18,7 @@
                 double3 position = (1.9361155467721045, 1.163287318836559, 5)
                 double radius = 4.470947647094727
             }
-            string boundCamera = "/OmniverseKit_Persp"
+            string boundCamera = "/World/spesbot/spesbot_raw/base_link/Camera_01"
         }
         dictionary navmeshSettings = {
             double agentHeight = 180
@@ -111,6 +111,18 @@ def Xform "World"
                 {
                     float state:angular:physics:position = 0
                     float state:angular:physics:velocity = 0
+                }
+
+                def Camera "Camera_01"
+                {
+                    float2 clippingRange = (0.01, 10000000)
+                    float focalLength = 18.147562
+                    float focusDistance = 400
+                    custom uniform vector3d omni:kit:centerOfInterest = (0, 0, -400)
+                    quatd xformOp:orient = (0.6037795550480051, 0.38590429363592216, -0.3756429615706249, -0.5877248424916569)
+                    double3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (-1.0689546011910582, 0.02735265898500553, 0.496120851374671)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
                 }
             }
 
@@ -238,34 +250,6 @@ def Xform "World"
             uniform float2 ui:nodegraph:node:pos = (375.24066, 343.95853)
         }
 
-        def OmniGraphNode "ros2_camera_helper" (
-            prepend apiSchemas = ["NodeGraphNodeAPI"]
-        )
-        {
-            custom uint64 inputs:context
-            custom bool inputs:enabled
-            custom bool inputs:enableSemanticLabels
-            custom uint inputs:execIn
-            prepend uint inputs:execIn.connect = </World/ActionGraph/isaac_create_render_product.outputs:execOut>
-            custom string inputs:frameId
-            custom string inputs:nodeNamespace
-            custom uint64 inputs:queueSize
-            custom token inputs:renderProductPath
-            prepend token inputs:renderProductPath.connect = </World/ActionGraph/isaac_create_render_product.outputs:renderProductPath>
-            custom bool inputs:resetSimulationTimeOnStop
-            custom string inputs:semanticLabelsTopicName
-            custom float2 inputs:stereoOffset
-            custom string inputs:topicName
-            custom token inputs:type (
-                allowedTokens = ["rgb", "depth", "depth_pcl", "instance_segmentation", "semantic_segmentation", "bbox_2d_tight", "bbox_2d_loose", "bbox_3d", "camera_info"]
-            )
-            custom token inputs:viewport
-            token node:type = "omni.isaac.ros2_bridge.ROS2CameraHelper"
-            int node:typeVersion = 2
-            uniform token ui:nodegraph:node:expansionState = "open"
-            uniform float2 ui:nodegraph:node:pos = (688.96857, 280.8498)
-        }
-
         def OmniGraphNode "ros2_camera_helper_01" (
             prepend apiSchemas = ["NodeGraphNodeAPI"]
         )
@@ -358,6 +342,92 @@ def compute(db: og.Database):
             custom bool state:omni_initialized
             uniform token ui:nodegraph:node:expansionState = "open"
             uniform float2 ui:nodegraph:node:pos = (443.537, 697.0367)
+        }
+
+        def OmniGraphNode "isaac_create_render_product_01" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom rel inputs:cameraPrim = </World/spesbot/spesbot_raw/base_link/Camera_01> (
+                customData = {
+                    dictionary omni = {
+                        dictionary graph = {
+                            string relType = "target"
+                        }
+                    }
+                }
+            )
+            custom bool inputs:enabled
+            custom uint inputs:execIn
+            prepend uint inputs:execIn.connect = </World/ActionGraph/on_tick.outputs:tick>
+            custom uint inputs:height
+            custom uint inputs:width
+            token node:type = "omni.isaac.core_nodes.IsaacCreateRenderProduct"
+            int node:typeVersion = 2
+            custom uint outputs:execOut (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            custom token outputs:renderProductPath
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (358.57397, 47.29185)
+        }
+
+        def OmniGraphNode "ros2_camera_helper" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom uint64 inputs:context
+            custom bool inputs:enabled
+            custom bool inputs:enableSemanticLabels
+            custom uint inputs:execIn
+            prepend uint inputs:execIn.connect = </World/ActionGraph/isaac_create_render_product.outputs:execOut>
+            custom string inputs:frameId
+            custom string inputs:nodeNamespace
+            custom uint64 inputs:queueSize
+            custom token inputs:renderProductPath
+            prepend token inputs:renderProductPath.connect = </World/ActionGraph/isaac_create_render_product.outputs:renderProductPath>
+            custom bool inputs:resetSimulationTimeOnStop
+            custom string inputs:semanticLabelsTopicName
+            custom float2 inputs:stereoOffset
+            custom string inputs:topicName
+            custom token inputs:type (
+                allowedTokens = ["rgb", "depth", "depth_pcl", "instance_segmentation", "semantic_segmentation", "bbox_2d_tight", "bbox_2d_loose", "bbox_3d", "camera_info"]
+            )
+            custom token inputs:viewport
+            token node:type = "omni.isaac.ros2_bridge.ROS2CameraHelper"
+            int node:typeVersion = 2
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (688.96857, 280.8498)
+        }
+
+        def OmniGraphNode "ros2_camera_helper_02" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom uint64 inputs:context
+            custom bool inputs:enabled
+            custom bool inputs:enableSemanticLabels
+            custom uint inputs:execIn
+            prepend uint inputs:execIn.connect = </World/ActionGraph/isaac_create_render_product_01.outputs:execOut>
+            custom string inputs:frameId
+            custom string inputs:nodeNamespace
+            custom uint64 inputs:queueSize
+            custom token inputs:renderProductPath
+            prepend token inputs:renderProductPath.connect = </World/ActionGraph/isaac_create_render_product_01.outputs:renderProductPath>
+            custom bool inputs:resetSimulationTimeOnStop
+            custom string inputs:semanticLabelsTopicName
+            custom float2 inputs:stereoOffset
+            custom string inputs:topicName = "top/view/rgb"
+            custom token inputs:type (
+                allowedTokens = ["rgb", "depth", "depth_pcl", "instance_segmentation", "semantic_segmentation", "bbox_2d_tight", "bbox_2d_loose", "bbox_3d", "camera_info"]
+            )
+            custom token inputs:viewport
+            token node:type = "omni.isaac.ros2_bridge.ROS2CameraHelper"
+            int node:typeVersion = 2
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (738.87854, -88.435715)
         }
     }
 

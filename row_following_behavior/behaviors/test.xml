@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root BTCPP_format="4">
+  <BehaviorTree ID="main_tree">
+    <Sequence>
+      <Script code="turn := &quot;left&quot;;&#10;field_coordinates := 3.5"/>
+      <Repeat num_cycles="-1">
+        <Fallback>
+          <ReactiveSequence>
+            <Inverter>
+              <IsOutOfField field_coordinates="{field_coordinates}"/>
+            </Inverter>
+            <FollowRowTopicNode mode="ml"/>
+          </ReactiveSequence>
+          <Sequence>
+            <GeneratePath arc_radius="0.255"
+                          line_length="0.75"
+                          reference_frame="base_link"
+                          anchor_frame="odom"
+                          turn="{turn}"
+                          waypoints="{waypoints}"
+                          _onSuccess="turn := (turn == &quot;left&quot;) ? &quot;right&quot; : &quot;left&quot;"/>
+            <ForceSuccess _onSuccess="field_coordinates += 0.9">
+              <FollowPath waypoints="{waypoints}"/>
+            </ForceSuccess>
+          </Sequence>
+        </Fallback>
+      </Repeat>
+    </Sequence>
+  </BehaviorTree>
+
+  <BehaviorTree ID="test_rotate">
+    <Sequence>
+      <Script code="turn := &quot;left&quot;;&#10;field_coordinates := 3.5"/>
+      <Repeat num_cycles="-1">
+        <Sequence>
+          <GeneratePath arc_radius="0.425"
+                        line_length="0.75"
+                        reference_frame="base_link"
+                        anchor_frame="odom"
+                        turn="{turn}"
+                        waypoints="{waypoints}"
+                        _onSuccess="turn := (turn == &quot;left&quot;) ? &quot;right&quot; : &quot;left&quot;"/>
+          <FollowPath waypoints="{waypoints}"/>
+        </Sequence>
+      </Repeat>
+    </Sequence>
+  </BehaviorTree>
+
+  <!-- Description of Node Models (used by Groot) -->
+  <TreeNodesModel>
+    <Action ID="FollowPath"
+            editable="true">
+      <input_port name="waypoints"
+                  default="{waypoints}"/>
+    </Action>
+    <Action ID="FollowRowTopicNode"
+            editable="true">
+      <input_port name="mode"/>
+    </Action>
+    <Action ID="GeneratePath"
+            editable="true">
+      <input_port name="arc_radius"
+                  default="0.425"/>
+      <input_port name="line_length"
+                  default="0.75"/>
+      <input_port name="reference_frame"
+                  default="base_link"/>
+      <input_port name="anchor_frame"
+                  default="odom"/>
+      <input_port name="turn"
+                  default="left"/>
+      <output_port name="waypoints"
+                   default="{waypoints}"/>
+    </Action>
+    <Condition ID="IsOutOfField"
+               editable="true">
+      <input_port name="field_coordinates"/>
+    </Condition>
+  </TreeNodesModel>
+
+</root>

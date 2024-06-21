@@ -1,0 +1,7 @@
+float64 arc_radius
+float64 line_length
+string reference_frame
+string anchor_frame
+string turn
+---
+geometry_msgs/PoseStamped[] waypoints

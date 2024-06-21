@@ -75,7 +75,7 @@ class RowFollow(Node):
         )
 
         self.model = YOLO(yolo_model_path)
-        self.mode = 'ht'
+        self.mode = 'ml'
         self.out = False
         self.ground_center_coordinates = []
 
@@ -250,7 +250,7 @@ class RowFollow(Node):
         if self.mode == 'turn':
             return
 
-        cmd_vel.linear.x = 0.5
+        cmd_vel.linear.x = 0.3
         cmd_vel.angular.z = output
         self.publisher_.publish(cmd_vel)
 
@@ -416,7 +416,7 @@ class RowFollow(Node):
             self.get_logger().info('End of the row!')
             self.mode = 'ml'
         else:
-            self.mode = 'ht'    
+            self.mode = 'ml'    
 
 def main(args=None):
     rclpy.init(args=args)

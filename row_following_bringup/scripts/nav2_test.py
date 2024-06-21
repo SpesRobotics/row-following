@@ -82,7 +82,8 @@ class FollowPathClient(Node):
         path_msg = Path()
         path_msg.header.frame_id = 'odom'
         
-        radius = (0.5 + 0.35) / 2
+        # radius = (0.5 + 0.35) / 2
+        radius = 0.5 / 2
         step = 1
         left_turn = True
         x_offset = 0
@@ -99,7 +100,7 @@ class FollowPathClient(Node):
                 self.get_logger().info(f"{e}")
                 rclpy.spin_once(self, timeout_sec=0.1)
 
-        for angle in range(-90, 80, step):
+        for angle in range(-90, 90, step):
             angle_rad = math.radians(angle)
             x = x_offset + radius * math.cos(angle_rad)
             y = radius * math.sin(angle_rad)
@@ -120,18 +121,28 @@ class FollowPathClient(Node):
 
                     tf_base_link_point[:3, 3] = np.array([x_offset, translation_y, 0])
 
+                    waypoint = tf_odom_base_link @ tf_base_link_point
+
+                    waypoint_msg_pose = rnp.msgify(Pose, waypoint)
+
+                    waypoint_msg_pose_stamped = PoseStamped()
+                    waypoint_msg_pose_stamped.header.frame_id = 'odom'
+                    waypoint_msg_pose_stamped.pose = waypoint_msg_pose
+
+                    path_msg.poses.append(waypoint_msg_pose_stamped)
+
             else:
                 tf_base_link_point[:3, 3] = np.array([x, translation_y, 0])
 
-            waypoint = tf_odom_base_link @ tf_base_link_point
+                waypoint = tf_odom_base_link @ tf_base_link_point
 
-            waypoint_msg_pose = rnp.msgify(Pose, waypoint)
+                waypoint_msg_pose = rnp.msgify(Pose, waypoint)
 
-            waypoint_msg_pose_stamped = PoseStamped()
-            waypoint_msg_pose_stamped.header.frame_id = 'odom'
-            waypoint_msg_pose_stamped.pose = waypoint_msg_pose
+                waypoint_msg_pose_stamped = PoseStamped()
+                waypoint_msg_pose_stamped.header.frame_id = 'odom'
+                waypoint_msg_pose_stamped.pose = waypoint_msg_pose
 
-            path_msg.poses.append(waypoint_msg_pose_stamped)
+                path_msg.poses.append(waypoint_msg_pose_stamped)
 
         self.path_publisher.publish(path_msg)
 
