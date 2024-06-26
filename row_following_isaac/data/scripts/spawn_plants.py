@@ -46,6 +46,9 @@ def set_rotate(prim, rot_mat):
 
 # GroundPlane(prim_path="/World/groundPlane", size=10, color=np.array([0.5, 0.5, 0.5]))
 
+prims_utils.delete_prim("/World/persun")
+prims_utils.delete_prim("/World/spesbot")
+
 #OBJ PATH
 plant_usd_path = '/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda'
 

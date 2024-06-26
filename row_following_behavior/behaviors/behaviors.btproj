@@ -22,6 +22,7 @@
         </Action>
         <Condition ID="IsOutOfField" editable="true">
             <input_port name="field_coordinates"/>
+            <input_port name="turn"/>
         </Condition>
         <Action ID="TwistPublisher" editable="true">
             <input_port name="linear_velocity"/>

@@ -26,7 +26,8 @@ public:
     static BT::PortsList providedPorts()
     {
         return providedBasicPorts({
-            InputPort<double>("field_coordinates")
+            InputPort<double>("field_coordinates"),
+            InputPort<std::string>("turn")
         });
     }
     BT::NodeStatus onTick(const std::shared_ptr<tf2_msgs::msg::TFMessage>& last_msg) override
@@ -36,6 +37,15 @@ public:
         {
             throw BT::RuntimeError("missing required input [field_coordinates]");
         }
+
+        std::string turn;
+        if (!getInput<std::string>("turn", turn))
+        {
+            throw BT::RuntimeError("missing required input [turn]");
+        }
+
+        RCLCPP_INFO(this->logger(), "Field Coordinates: %f", field_coordinates);
+        RCLCPP_INFO(this->logger(), "Turn: %s", turn.c_str());
         
         geometry_msgs::msg::TransformStamped transform;
         try
@@ -47,8 +57,17 @@ public:
             RCLCPP_WARN(this->logger(), "Could not transform %s to %s: %s", "map", "base_link", ex.what());
             return BT::NodeStatus::FAILURE;
         }
-        if (transform.transform.translation.x >= field_coordinates)
+        RCLCPP_INFO(this->logger(), "Current Coordinates: %f", transform.transform.translation.x);
+
+        if (turn == "left" && transform.transform.translation.x >= field_coordinates)
             return BT::NodeStatus::SUCCESS;
+        if (turn == "right" && transform.transform.translation.x <= field_coordinates)
+        {
+            RCLCPP_INFO(this->logger(), "HERE!");
+            return BT::NodeStatus::SUCCESS;
+        }
+        // if (transform.transform.translation.x >= field_coordinates)
+        //     return BT::NodeStatus::SUCCESS;
 
         return BT::NodeStatus::FAILURE;
     }

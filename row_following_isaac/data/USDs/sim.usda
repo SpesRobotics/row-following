@@ -1,0 +1,3064 @@
+#usda 1.0
+(
+    customLayerData = {
+        dictionary cameraSettings = {
+            dictionary Front = {
+                double3 position = (5, 0, 0)
+                double radius = 5
+            }
+            dictionary Perspective = {
+                double3 position = (0.47544812944826476, 3.888243472618088, 1.5360690127489256)
+                double3 target = (2.207464035838529, -0.7740015499051927, -0.3378173694017279)
+            }
+            dictionary Right = {
+                double3 position = (0, -5, 0)
+                double radius = 5
+            }
+            dictionary Top = {
+                double3 position = (2.0778422485786896, 1.2729814299662952, 5.420358538902339)
+                double radius = 10.043595886230468
+            }
+            string boundCamera = "/World/Camera"
+        }
+        dictionary metricsAssembler = {
+            dictionary "/World/Camera01" = {
+            }
+            int version = 1
+        }
+        dictionary navmeshSettings = {
+            double agentHeight = 180
+            double agentRadius = 20
+            bool excludeRigidBodies = 1
+            int ver = 1
+            double voxelCeiling = 460
+        }
+        dictionary omni_layer = {
+            string authoring_layer = "./sim.usda"
+            dictionary locked = {
+            }
+            dictionary muteness = {
+            }
+        }
+        int refinementOverrideImplVersion = 0
+        dictionary renderSettings = {
+            float3 "rtx:debugView:pixelDebug:textColor" = (0, 1e18, 0)
+            float3 "rtx:fog:fogColor" = (0.75, 0.75, 0.75)
+            float3 "rtx:index:regionOfInterestMax" = (0, 0, 0)
+            float3 "rtx:index:regionOfInterestMin" = (0, 0, 0)
+            float3 "rtx:iray:environment_dome_ground_position" = (0, 0, 0)
+            float3 "rtx:iray:environment_dome_ground_reflectivity" = (0, 0, 0)
+            float3 "rtx:iray:environment_dome_rotation_axis" = (3.4028235e38, 3.4028235e38, 3.4028235e38)
+            float3 "rtx:post:backgroundZeroAlpha:backgroundDefaultColor" = (0, 0, 0)
+            float3 "rtx:post:colorcorr:contrast" = (1, 1, 1)
+            float3 "rtx:post:colorcorr:gain" = (1, 1, 1)
+            float3 "rtx:post:colorcorr:gamma" = (1, 1, 1)
+            float3 "rtx:post:colorcorr:offset" = (0, 0, 0)
+            float3 "rtx:post:colorcorr:saturation" = (1, 1, 1)
+            float3 "rtx:post:colorgrad:blackpoint" = (0, 0, 0)
+            float3 "rtx:post:colorgrad:contrast" = (1, 1, 1)
+            float3 "rtx:post:colorgrad:gain" = (1, 1, 1)
+            float3 "rtx:post:colorgrad:gamma" = (1, 1, 1)
+            float3 "rtx:post:colorgrad:lift" = (0, 0, 0)
+            float3 "rtx:post:colorgrad:multiply" = (1, 1, 1)
+            float3 "rtx:post:colorgrad:offset" = (0, 0, 0)
+            float3 "rtx:post:colorgrad:whitepoint" = (1, 1, 1)
+            float3 "rtx:post:lensDistortion:lensFocalLengthArray" = (10, 30, 50)
+            float3 "rtx:post:lensFlares:anisoFlareFalloffX" = (450, 475, 500)
+            float3 "rtx:post:lensFlares:anisoFlareFalloffY" = (10, 10, 10)
+            float3 "rtx:post:lensFlares:cutoffPoint" = (2, 2, 2)
+            float3 "rtx:post:lensFlares:haloFlareFalloff" = (10, 10, 10)
+            float3 "rtx:post:lensFlares:haloFlareRadius" = (75, 75, 75)
+            float3 "rtx:post:lensFlares:isotropicFlareFalloff" = (50, 50, 50)
+            float3 "rtx:post:tonemap:whitepoint" = (1, 1, 1)
+            float3 "rtx:raytracing:inscattering:singleScatteringAlbedo" = (0.9, 0.9, 0.9)
+            float3 "rtx:raytracing:inscattering:transmittanceColor" = (0.5, 0.5, 0.5)
+            float3 "rtx:sceneDb:ambientLightColor" = (0.1, 0.1, 0.1)
+        }
+    }
+    defaultPrim = "World"
+    endTimeCode = 100
+    metersPerUnit = 1
+    startTimeCode = 0
+    timeCodesPerSecond = 60
+    upAxis = "Z"
+)
+
+def Xform "World"
+{
+    def Xform "spesbot" (
+        delete references = [
+            @/home/milos/row-following/row_following_isaac/data/USDs/spesbot/spesbot.usda@,
+            @/home/milos/row-following/row_following_isaac/data/spesbot/spesbot.usda@
+        ]
+        prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/spesbot.usda@
+    )
+    {
+        token visibility = "invisible"
+        quatd xformOp:orient = (1, 0, 0, 0)
+        double3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (0, 0.25, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        over "spesbot_raw"
+        {
+            quatd xformOp:orient = (1, 0, 0, 0)
+            double3 xformOp:translate = (0, 0, 0.08918070793151855)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+            over "base_link"
+            {
+                over "left_motor"
+                {
+                    float state:angular:physics:position = 0
+                    float state:angular:physics:velocity = 0
+                }
+
+                over "right_motor"
+                {
+                    float state:angular:physics:position = 0
+                    float state:angular:physics:velocity = 0
+                }
+
+                def Camera "Camera_01"
+                {
+                    float2 clippingRange = (0.01, 10000000)
+                    float focalLength = 18.147562
+                    float focusDistance = 400
+                    bool omni:kit:cameraLock = 0
+                    custom uniform vector3d omni:kit:centerOfInterest = (0, 0, -400)
+                    quatd xformOp:orient = (0.6037795550480051, 0.38590429363592216, -0.3756429615706249, -0.5877248424916569)
+                    double3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (-1.0689546011910582, 0.02735265898500553, 0.496120851374671)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+            }
+
+            over "caster_holder_link"
+            {
+            }
+
+            over "left_wheel_link"
+            {
+            }
+
+            over "right_wheel_link"
+            {
+            }
+
+            over "caster_wheel_link"
+            {
+            }
+        }
+
+        over "ActionGraph"
+        {
+            def OmniGraphNode "ros2_publish_transform_tree" (
+                prepend apiSchemas = ["NodeGraphNodeAPI"]
+            )
+            {
+                custom uint64 inputs:context
+                custom uint inputs:execIn
+                prepend uint inputs:execIn.connect = </World/spesbot/ActionGraph/on_playback_tick.outputs:tick>
+                custom string inputs:nodeNamespace
+                custom rel inputs:parentPrim = </World> (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                custom uint64 inputs:queueSize
+                custom rel inputs:targetPrims = </World/spesbot/spesbot_raw/base_link> (
+                    customData = {
+                        dictionary omni = {
+                            dictionary graph = {
+                                string relType = "target"
+                            }
+                        }
+                    }
+                )
+                custom double inputs:timeStamp
+                custom string inputs:topicName = "isaac/tf"
+                token node:type = "omni.isaac.ros2_bridge.ROS2PublishTransformTree"
+                int node:typeVersion = 1
+                uniform token ui:nodegraph:node:expansionState = "open"
+                uniform float2 ui:nodegraph:node:pos = (381.74792, 732.7786)
+            }
+
+            over "isaac_read_simulation_time"
+            {
+                uniform float2 ui:nodegraph:node:pos = (-25.450583, 577.7904)
+            }
+        }
+    }
+
+    def OmniGraph "ActionGraph"
+    {
+        token evaluationMode = "Automatic"
+        token evaluator:type = "execution"
+        token fabricCacheBacking = "Shared"
+        int2 fileFormatVersion = (1, 7)
+        token pipelineStage = "pipelineStageSimulation"
+
+        def OmniGraphNode "on_tick" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom uint inputs:framePeriod
+            custom bool inputs:onlyPlayback
+            token node:type = "omni.graph.action.OnTick"
+            int node:typeVersion = 1
+            custom double outputs:absoluteSimTime
+            custom double outputs:deltaSeconds
+            custom double outputs:frame
+            custom bool outputs:isPlaying
+            custom uint outputs:tick (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            custom double outputs:time
+            custom double outputs:timeSinceStart
+            custom double state:accumulatedSeconds
+            custom uint state:frameCount
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (-261.427, 619.619)
+        }
+
+        def OmniGraphNode "isaac_create_render_product" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom rel inputs:cameraPrim = </World/spesbot/spesbot_raw/base_link/Camera> (
+                customData = {
+                    dictionary omni = {
+                        dictionary graph = {
+                            string relType = "target"
+                        }
+                    }
+                }
+            )
+            custom bool inputs:enabled
+            custom uint inputs:execIn
+            prepend uint inputs:execIn.connect = </World/ActionGraph/on_tick.outputs:tick>
+            custom uint inputs:height
+            custom uint inputs:width
+            token node:type = "omni.isaac.core_nodes.IsaacCreateRenderProduct"
+            int node:typeVersion = 2
+            custom uint outputs:execOut (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            custom token outputs:renderProductPath
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (375.24066, 343.95853)
+        }
+
+        def OmniGraphNode "ros2_camera_helper_01" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom uint64 inputs:context
+            custom bool inputs:enabled
+            custom bool inputs:enableSemanticLabels
+            custom uint inputs:execIn
+            prepend uint inputs:execIn.connect = </World/ActionGraph/isaac_create_render_product.outputs:execOut>
+            custom string inputs:frameId
+            custom string inputs:nodeNamespace
+            custom uint64 inputs:queueSize
+            custom token inputs:renderProductPath
+            prepend token inputs:renderProductPath.connect = </World/ActionGraph/isaac_create_render_product.outputs:renderProductPath>
+            custom bool inputs:resetSimulationTimeOnStop
+            custom string inputs:semanticLabelsTopicName
+            custom float2 inputs:stereoOffset
+            custom string inputs:topicName = "semantic_segmentation"
+            custom token inputs:type = "semantic_segmentation" (
+                allowedTokens = ["rgb", "depth", "depth_pcl", "instance_segmentation", "semantic_segmentation", "bbox_2d_tight", "bbox_2d_loose", "bbox_3d", "camera_info"]
+            )
+            custom token inputs:viewport
+            token node:type = "omni.isaac.ros2_bridge.ROS2CameraHelper"
+            int node:typeVersion = 2
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (708.96857, 682.8498)
+        }
+
+        def OmniGraphNode "ros2_subscribe_twist" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom uint64 inputs:context
+            custom uint inputs:execIn
+            prepend uint inputs:execIn.connect = </World/ActionGraph/on_tick.outputs:tick>
+            custom string inputs:nodeNamespace
+            custom uint64 inputs:queueSize
+            custom string inputs:topicName = "isaac/dataset"
+            token node:type = "omni.isaac.ros2_bridge.ROS2SubscribeTwist"
+            int node:typeVersion = 1
+            custom vector3d outputs:angularVelocity
+            custom uint outputs:execOut (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            custom vector3d outputs:linearVelocity
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (163.50262, 675.7219)
+        }
+
+        def OmniGraphNode "script_node" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom uint inputs:execIn
+            prepend uint inputs:execIn.connect = </World/ActionGraph/ros2_subscribe_twist.outputs:execOut>
+            custom string inputs:script = """# This script is executed the first time the script node computes, or the next time
+# it computes after this script is modified or the 'Reset' button is pressed.
+#
+# The following callback functions may be defined in this script:
+#     setup(db): Called immediately after this script is executed
+#     compute(db): Called every time the node computes (should always be defined)
+#     cleanup(db): Called when the node is deleted or the reset button is pressed
+# Available variables:
+#    db: og.Database The node interface, attributes are exposed like db.inputs.foo
+#                    Use db.log_error, db.log_warning to report problems.
+#    og: The omni.graph.core module
+
+
+def setup(db: og.Database):
+    pass
+
+
+def cleanup(db: og.Database):
+    pass
+
+
+def compute(db: og.Database):
+    return True"""
+            custom token inputs:scriptPath = "../scripts/isaac_randomize_cam_pos.py"
+            custom bool inputs:usePath = 1
+            token node:type = "omni.graph.scriptnode.ScriptNode"
+            int node:typeVersion = 2
+            custom uint outputs:execOut (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            custom bool state:omni_initialized
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (443.537, 697.0367)
+        }
+
+        def OmniGraphNode "isaac_create_render_product_01" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom rel inputs:cameraPrim = </World/TopView> (
+                customData = {
+                    dictionary omni = {
+                        dictionary graph = {
+                            string relType = "target"
+                        }
+                    }
+                }
+            )
+            custom bool inputs:enabled
+            custom uint inputs:execIn
+            prepend uint inputs:execIn.connect = </World/ActionGraph/on_tick.outputs:tick>
+            custom uint inputs:height
+            custom uint inputs:width
+            token node:type = "omni.isaac.core_nodes.IsaacCreateRenderProduct"
+            int node:typeVersion = 2
+            custom uint outputs:execOut (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            custom token outputs:renderProductPath
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (356.21704, 54.362682)
+        }
+
+        def OmniGraphNode "ros2_camera_helper" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom uint64 inputs:context
+            custom bool inputs:enabled
+            custom bool inputs:enableSemanticLabels
+            custom uint inputs:execIn
+            prepend uint inputs:execIn.connect = </World/ActionGraph/isaac_create_render_product.outputs:execOut>
+            custom string inputs:frameId
+            custom string inputs:nodeNamespace
+            custom uint64 inputs:queueSize
+            custom token inputs:renderProductPath
+            prepend token inputs:renderProductPath.connect = </World/ActionGraph/isaac_create_render_product.outputs:renderProductPath>
+            custom bool inputs:resetSimulationTimeOnStop
+            custom string inputs:semanticLabelsTopicName
+            custom float2 inputs:stereoOffset
+            custom string inputs:topicName
+            custom token inputs:type (
+                allowedTokens = ["rgb", "depth", "depth_pcl", "instance_segmentation", "semantic_segmentation", "bbox_2d_tight", "bbox_2d_loose", "bbox_3d", "camera_info"]
+            )
+            custom token inputs:viewport
+            token node:type = "omni.isaac.ros2_bridge.ROS2CameraHelper"
+            int node:typeVersion = 2
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (688.96857, 280.8498)
+        }
+
+        def OmniGraphNode "ros2_camera_helper_02" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom uint64 inputs:context
+            custom bool inputs:enabled
+            custom bool inputs:enableSemanticLabels
+            custom uint inputs:execIn
+            prepend uint inputs:execIn.connect = </World/ActionGraph/isaac_create_render_product_01.outputs:execOut>
+            custom string inputs:frameId
+            custom string inputs:nodeNamespace
+            custom uint64 inputs:queueSize
+            custom token inputs:renderProductPath
+            prepend token inputs:renderProductPath.connect = </World/ActionGraph/isaac_create_render_product_01.outputs:renderProductPath>
+            custom bool inputs:resetSimulationTimeOnStop
+            custom string inputs:semanticLabelsTopicName
+            custom float2 inputs:stereoOffset
+            custom string inputs:topicName = "top/view/rgb"
+            custom token inputs:type (
+                allowedTokens = ["rgb", "depth", "depth_pcl", "instance_segmentation", "semantic_segmentation", "bbox_2d_tight", "bbox_2d_loose", "bbox_3d", "camera_info"]
+            )
+            custom token inputs:viewport
+            token node:type = "omni.isaac.ros2_bridge.ROS2CameraHelper"
+            int node:typeVersion = 2
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (738.87854, -88.435715)
+        }
+
+        def OmniGraphNode "script_node_01" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom float3 inputs:angular
+            prepend float3 inputs:angular.connect = </World/ActionGraph/ros2_subscribe_twist_01.outputs:angularVelocity>
+            custom uint inputs:execIn
+            prepend uint inputs:execIn.connect = </World/ActionGraph/ros2_subscribe_twist_01.outputs:execOut>
+            custom float3 inputs:linear
+            prepend float3 inputs:linear.connect = </World/ActionGraph/ros2_subscribe_twist_01.outputs:linearVelocity>
+            custom string inputs:script = """# This script is executed the first time the script node computes, or the next time
+# it computes after this script is modified or the 'Reset' button is pressed.
+#
+# The following callback functions may be defined in this script:
+#     setup(db): Called immediately after this script is executed
+#     compute(db): Called every time the node computes (should always be defined)
+#     cleanup(db): Called when the node is deleted or the reset button is pressed
+# Available variables:
+#    db: og.Database The node interface, attributes are exposed like db.inputs.foo
+#                    Use db.log_error, db.log_warning to report problems.
+#    og: The omni.graph.core module
+
+
+def setup(db: og.Database):
+    pass
+
+
+def cleanup(db: og.Database):
+    pass
+
+
+def compute(db: og.Database):
+    return True"""
+            custom token inputs:scriptPath = "../scripts/isaac_spawn_plants.py"
+            custom bool inputs:usePath = 1
+            token node:type = "omni.graph.scriptnode.ScriptNode"
+            int node:typeVersion = 2
+            custom uint outputs:execOut (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            custom bool state:omni_initialized
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (440.09213, 952.8597)
+        }
+
+        def OmniGraphNode "ros2_subscribe_twist_01" (
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom uint64 inputs:context
+            custom uint inputs:execIn
+            prepend uint inputs:execIn.connect = </World/ActionGraph/on_tick.outputs:tick>
+            custom string inputs:nodeNamespace
+            custom uint64 inputs:queueSize
+            custom string inputs:topicName = "field/coordinates"
+            token node:type = "omni.isaac.ros2_bridge.ROS2SubscribeTwist"
+            int node:typeVersion = 1
+            custom vector3d outputs:angularVelocity
+            custom uint outputs:execOut (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            custom vector3d outputs:linearVelocity
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (159.809, 946.20593)
+        }
+    }
+
+    def Camera "Camera" (
+        instanceable = false
+    )
+    {
+        float2 clippingRange = (0.01, 10000000)
+        float focalLength = 18.147562
+        float focusDistance = 400
+        bool omni:kit:cameraLock = 0
+        custom uniform vector3d omni:kit:centerOfInterest = (0, 0, -400)
+        quatd xformOp:orient = (0.7026805189685417, 0.18608221397564534, -0.21776270937240017, -0.6513009291493564)
+        double3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (2.2573074673700937, 0.02158816328425256, 0.49689413982833425)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        def Capsule "Capsule"
+        {
+            uniform token axis = "Z"
+            float3[] extent = [(-0.25, -0.25, -0.5), (0.25, 0.25, 0.5)]
+            double height = 0.5
+            double radius = 0.25
+            custom bool refinementEnableOverride = 1
+            custom int refinementLevel = 2
+            quatd xformOp:orient = (1, 0, 0, 0)
+            double3 xformOp:scale = (0.2, 0.2, 0.2)
+            double3 xformOp:translate = (0, 0, 0.1)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+    }
+
+    def "persun"
+    {
+        def Xform "persun_0_0_0" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.8829142685998531, 0, 0, -0.46953423123643123)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_0_0_1" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.7245544089995821, 0, 0, -0.6892176059846893)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.10000000149011612, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_0_0_2" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.24695022742212466, 0, 0, 0.9690281653162415)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.20000000298023224, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_0_0_3" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.6870239116856197, 0, 0, 0.7266348083956546)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.30000001192092896, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_0_0_4" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.035413175739839896, 0, 0, -0.9993727567749778)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.4000000059604645, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_0_0_5" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.29423808522515077, 0, 0, 0.9557321534839335)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.5, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_0_0_6" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.7780649732879089, 0, 0, -0.6281838085644085)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.6000000238418579, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_0_0_7" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.5793339421753676, 0, 0, 0.8150902915895564)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.699999988079071, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_0_0_8" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.0734566155404469, 0, 0, 0.9972984135319494)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.800000011920929, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_0_0_9" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.2589668430134467, 0, 0, -0.965886211838459)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.8999999761581421, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_0_0_10" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9586228077709109, 0, 0, -0.2846793150571624)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_0_0_11" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.014723659771507778, 0, 0, -0.9998916010462999)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.100000023841858, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_0_0_12" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.6329646324636775, 0, 0, 0.7741807114944944)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.2000000476837158, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_0_0_13" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.7198822150194293, 0, 0, -0.6940962444061487)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.2999999523162842, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_0_0_14" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.3633556145921516, 0, 0, -0.9316505231814984)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.399999976158142, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_0_0_15" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.705981079334968, 0, 0, 0.7082306937863069)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.5, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_0_0_16" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9600709799263534, 0, 0, -0.2797565253988752)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.600000023841858, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_0_0_17" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9985379779192836, 0, 0, -0.054054663562622896)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.7000000476837158, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_0_0_18" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.827463984996567, 0, 0, -0.5615187917902666)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.7999999523162842, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_0_0_19" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9531371990364309, 0, 0, -0.3025383939485819)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.899999976158142, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_0_0_20" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.5616998806836165, 0, 0, 0.8273410687497694)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_0_0_21" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.66091528042699, 0, 0, -0.750460520012954)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.0999999046325684, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_0_0_22" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9499223884263176, 0, 0, -0.3124859292295254)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.200000047683716, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_0_0_23" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.5463520681449503, 0, 0, -0.8375556206209446)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.299999952316284, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_0_0_24" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.08740456742903628, 0, 0, 0.9961728974392662)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.4000000953674316, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_0_0_25" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9503734725339732, 0, 0, 0.311111334900735)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.5, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_0_0_26" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.20533430461999186, 0, 0, 0.9786918939820767)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.5999999046325684, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_0_0_27" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.3413583747358554, 0, 0, -0.9399332210309918)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.700000047683716, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_0_0_28" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9628897991762663, 0, 0, -0.26989485849546946)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.799999952316284, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_0_0_29" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.994502076219631, 0, 0, -0.10471685821701786)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.9000000953674316, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_0_0_30" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.07216313804681651, 0, 0, 0.997392842117506)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_0_0_31" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9118035224277165, 0, 0, -0.41062676056049824)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.0999999046325684, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_0_0_32" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.6834188365307267, 0, 0, 0.7300265021730292)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.200000047683716, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_0_0_33" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.8181999819130801, 0, 0, -0.5749337262654153)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.299999952316284, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_0_0_34" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.15239722133756742, 0, 0, -0.9883193243727397)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.4000000953674316, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_0_0_35" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9990271660650784, 0, 0, 0.04409899617880538)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.5, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_0_0_36" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.6367088679945558, 0, 0, -0.7711042843980904)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.5999999046325684, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_0_0_37" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.3125299341629937, 0, 0, 0.9499079114588291)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.700000047683716, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_0_0_38" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.8523855966997107, 0, 0, -0.5229137543982547)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.799999952316284, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_0_0_39" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.5040389460565744, 0, 0, -0.8636809253759039)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.9000000953674316, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_1_0_0" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9999935549776682, 0, 0, 0.0035902650494557117)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0, 0.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_1_0_1" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.020174358772221387, 0, 0, 0.9997964769132414)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.10000000149011612, 0.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_1_0_2" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9147376660699953, 0, 0, -0.404048267256299)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.20000000298023224, 0.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_1_0_3" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.7205032116117365, 0, 0, 0.6934516003710519)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.30000001192092896, 0.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_1_0_4" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.5219510411875873, 0, 0, 0.8529754454866761)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.4000000059604645, 0.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_1_0_5" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9183415651893266, 0, 0, -0.39578879423957647)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.5, 0.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_1_0_6" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.8251916206237605, 0, 0, 0.5648528916915727)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.6000000238418579, 0.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_1_0_7" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.21050474651890716, 0, 0, -0.9775928353322824)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.699999988079071, 0.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_1_0_8" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.7319382666914391, 0, 0, 0.681370951650224)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.800000011920929, 0.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_1_0_9" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9948050221575723, 0, 0, -0.10179866349845677)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.8999999761581421, 0.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_1_0_10" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.8148476886315339, 0, 0, -0.5796751196418962)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1, 0.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_1_0_11" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.16273148586019642, 0, 0, 0.9866703925373116)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.100000023841858, 0.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_1_0_12" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.968233901089963, 0, 0, 0.25004622128740833)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.2000000476837158, 0.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_1_0_13" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.5356819463228126, 0, 0, 0.8444198318276303)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.2999999523162842, 0.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_1_0_14" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.02494367687762591, 0, 0, -0.9996888580872674)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.399999976158142, 0.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_1_0_15" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9778201302136972, 0, 0, -0.2094463963616187)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.5, 0.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_1_0_16" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9418792643383822, 0, 0, 0.3359515611057465)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.600000023841858, 0.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_1_0_17" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.16036537112005317, 0, 0, -0.9870577226006226)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.7000000476837158, 0.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_1_0_18" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.6043356900868565, 0, 0, -0.7967297996731658)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.7999999523162842, 0.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_1_0_19" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.1484888618272864, 0, 0, -0.9889140801471262)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.899999976158142, 0.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_1_0_20" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.8348866320382714, 0, 0, -0.5504219396461154)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2, 0.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_1_0_21" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.12621713565020232, 0, 0, -0.9920026384381538)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.0999999046325684, 0.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_1_0_22" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9935539393772452, 0, 0, -0.11336035262805548)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.200000047683716, 0.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_1_0_23" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.3185194818931729, 0, 0, -0.9479163146894901)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.299999952316284, 0.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_1_0_24" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.27179439169318487, 0, 0, -0.9623553442695331)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.4000000953674316, 0.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_1_0_25" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.1719630617938857, 0, 0, 0.9851033983184061)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.5, 0.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_1_0_26" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.2979019869057141, 0, 0, -0.9545964624895841)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.5999999046325684, 0.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_1_0_27" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.3537653373720848, 0, 0, 0.9353342108968402)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.700000047683716, 0.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_1_0_28" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.23543358591678135, 0, 0, -0.9718904396187696)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.799999952316284, 0.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_1_0_29" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.6120887867134539, 0, 0, 0.7907890472051645)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.9000000953674316, 0.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_1_0_30" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.8281538760758603, 0, 0, 0.5605008095806184)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3, 0.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_1_0_31" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.8328119376585944, 0, 0, 0.553556028323545)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.0999999046325684, 0.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_1_0_32" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.3469221039586766, 0, 0, -0.9378939459154672)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.200000047683716, 0.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_1_0_33" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.47253061506696203, 0, 0, -0.8813142559975065)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.299999952316284, 0.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_1_0_34" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.07366328030608701, 0, 0, 0.9972831699846071)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.4000000953674316, 0.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_1_0_35" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9604474827487043, 0, 0, 0.27846118738825626)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.5, 0.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_1_0_36" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.7237950941825569, 0, 0, -0.6900149720384793)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.5999999046325684, 0.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_1_0_37" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9259936347686054, 0, 0, -0.3775391216391048)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.700000047683716, 0.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_1_0_38" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9711700011695243, 0, 0, -0.23838797962226616)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.799999952316284, 0.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_1_0_39" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.8800039520877755, 0, 0, -0.4749663612403474)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.9000000953674316, 0.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_2_0_0" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9492673184655753, 0, 0, -0.31447028173291003)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0, 1, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_2_0_1" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9709459649461779, 0, 0, -0.23929883650936423)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.10000000149011612, 1, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_2_0_2" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.12720286808583967, 0, 0, -0.9918767213473338)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.20000000298023224, 1, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_2_0_3" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.3349041745873732, 0, 0, 0.9422521922733587)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.30000001192092896, 1, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_2_0_4" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.6011319680241611, 0, 0, -0.7991497713316315)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.4000000059604645, 1, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_2_0_5" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.6479319172166927, 0, 0, 0.7616982543316617)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.5, 1, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_2_0_6" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.8299457686068955, 0, 0, -0.557844083209197)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.6000000238418579, 1, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_2_0_7" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.8902722188881895, 0, 0, -0.4554287828803747)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.699999988079071, 1, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_2_0_8" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9461250056376619, 0, 0, -0.3238015962084409)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.800000011920929, 1, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_2_0_9" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.2783912518776602, 0, 0, -0.960467756292729)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.8999999761581421, 1, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_2_0_10" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9875725173044131, 0, 0, -0.15716400053773405)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1, 1, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_2_0_11" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.24776172325733706, 0, 0, -0.9688209991987968)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.100000023841858, 1, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_2_0_12" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.15468694947323205, 0, 0, 0.9879635355936301)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.2000000476837158, 1, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_2_0_13" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.4824290579032918, 0, 0, -0.8759350455887368)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.2999999523162842, 1, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_2_0_14" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9999308949791608, 0, 0, -0.011756073586646446)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.399999976158142, 1, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_2_0_15" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9661487057062682, 0, 0, -0.2579858105828744)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.5, 1, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_2_0_16" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.7965142491861975, 0, 0, -0.6046197572386698)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.600000023841858, 1, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_2_0_17" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9667022894835328, 0, 0, 0.25590366059768666)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.7000000476837158, 1, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_2_0_18" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.34695134811837947, 0, 0, -0.937883128134225)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.7999999523162842, 1, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_2_0_19" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.042573923856271206, 0, 0, 0.9990933194689475)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.899999976158142, 1, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_2_0_20" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.3975726615959976, 0, 0, -0.917570694143767)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2, 1, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_2_0_21" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.8838796435595832, 0, 0, -0.4677144168196916)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.0999999046325684, 1, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_2_0_22" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.7224072652082552, 0, 0, 0.6914678178876655)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.200000047683716, 1, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_2_0_23" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.6648140284038265, 0, 0, -0.7470089073347629)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.299999952316284, 1, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_2_0_24" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9330529437187416, 0, 0, 0.3597390779687283)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.4000000953674316, 1, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_2_0_25" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.7695901993525839, 0, 0, 0.6385381155893909)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.5, 1, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_2_0_26" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.798897342046148, 0, 0, -0.6014674030000298)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.5999999046325684, 1, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_2_0_27" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.5021673277517962, 0, 0, 0.8647704752930804)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.700000047683716, 1, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_2_0_28" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.8373788348186274, 0, 0, -0.5466229843299657)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.799999952316284, 1, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_2_0_29" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9504650004767907, 0, 0, 0.31083159889022577)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.9000000953674316, 1, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_2_0_30" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.8961418223570279, 0, 0, 0.44376777059924644)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3, 1, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_2_0_31" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.5818492615759491, 0, 0, -0.8132966474808087)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.0999999046325684, 1, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_2_0_32" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9899197789150066, 0, 0, 0.14162920360174444)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.200000047683716, 1, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_2_0_33" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.2299798701487703, 0, 0, -0.9731953859972595)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.299999952316284, 1, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_2_0_34" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.960307720967467, 0, 0, -0.27894279171591735)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.4000000953674316, 1, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_2_0_35" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.10722952470858675, 0, 0, -0.9942342928257757)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.5, 1, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_2_0_36" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.5373885707381248, 0, 0, -0.8433347639223913)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.5999999046325684, 1, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_2_0_37" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9964849346873039, 0, 0, 0.08377216089632336)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.700000047683716, 1, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_2_0_38" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.411514100658369, 0, 0, -0.9114033931028201)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.799999952316284, 1, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_2_0_39" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.3278926081196794, 0, 0, -0.944715003342529)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.9000000953674316, 1, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_3_0_0" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.2363553696658887, 0, 0, -0.9716666811361298)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0, 1.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_3_0_1" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.33516063422819353, 0, 0, 0.9421609996512036)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.10000000149011612, 1.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_3_0_2" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.3967443747272025, 0, 0, 0.917929137309804)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.20000000298023224, 1.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_3_0_3" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.998127329408057, 0, 0, -0.061170534481397386)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.30000001192092896, 1.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_3_0_4" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.993471560493118, 0, 0, 0.1140800529951178)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.4000000059604645, 1.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_3_0_5" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9976907181551768, 0, 0, 0.06792076933462439)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.5, 1.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_3_0_6" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9925155560731953, 0, 0, -0.12211826625331679)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.6000000238418579, 1.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_3_0_7" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.8358557537685151, 0, 0, 0.5489491405331347)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.699999988079071, 1.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_3_0_8" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.925202237160868, 0, 0, 0.37947440012802564)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.800000011920929, 1.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_3_0_9" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.7890436447470373, 0, 0, 0.6143371441515735)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.8999999761581421, 1.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_3_0_10" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.8103934079764468, 0, 0, -0.5858861018221208)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1, 1.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_3_0_11" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9804585670308439, 0, 0, -0.19672569312579477)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.100000023841858, 1.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_3_0_12" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9974397051353182, 0, 0, 0.07151247876817977)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.2000000476837158, 1.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_3_0_13" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.23155452205569887, 0, 0, 0.9728219278550196)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.2999999523162842, 1.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_3_0_14" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.949589537498439, 0, 0, 0.31349594937335434)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.399999976158142, 1.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_3_0_15" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.6847305464339569, 0, 0, 0.7287963218761841)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.5, 1.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_3_0_16" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.7688499920216499, 0, 0, 0.6394291905819667)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.600000023841858, 1.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_3_0_17" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.4453639974951401, 0, 0, -0.8953496019629142)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.7000000476837158, 1.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_3_0_18" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.4531674387273558, 0, 0, 0.8914254161046162)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.7999999523162842, 1.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_3_0_19" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.8437923651212669, 0, 0, 0.5366697723582524)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.899999976158142, 1.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_3_0_20" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.011424169539658252, 0, 0, -0.9999347420458643)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2, 1.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_3_0_21" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9923574429013496, 0, 0, 0.1233965377078903)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.0999999046325684, 1.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_3_0_22" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9501581884012514, 0, 0, 0.3117682103968458)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.200000047683716, 1.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_3_0_23" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9993170432644964, 0, 0, -0.036951955849515654)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.299999952316284, 1.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_3_0_24" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.8102049223377197, 0, 0, 0.5861467255045699)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.4000000953674316, 1.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_3_0_25" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.42988158970940193, 0, 0, 0.902885274455685)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.5, 1.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_3_0_26" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.6650699908057086, 0, 0, -0.7467810303761703)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.5999999046325684, 1.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_3_0_27" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.8737618820158619, 0, 0, -0.486353959103963)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.700000047683716, 1.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_3_0_28" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9673862142840088, 0, 0, -0.25330596600406713)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.799999952316284, 1.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_3_0_29" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.8616607905916327, 0, 0, 0.5074846617948197)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.9000000953674316, 1.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_3_0_30" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.5161641688601714, 0, 0, -0.856489667646311)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3, 1.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_3_0_31" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9944831553990212, 0, 0, -0.10489639473121123)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.0999999046325684, 1.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_3_0_32" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9834161913689793, 0, 0, 0.18136315654876237)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.200000047683716, 1.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_3_0_33" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.5257139902895056, 0, 0, -0.8506613899865713)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.299999952316284, 1.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_3_0_34" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.8843890154574224, 0, 0, -0.4667505429437134)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.4000000953674316, 1.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_3_0_35" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.475374593993833, 0, 0, 0.8797834934716601)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.5, 1.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_3_0_36" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.7055782498516172, 0, 0, 0.7086320154610071)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.5999999046325684, 1.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_3_0_37" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.29941467958986956, 0, 0, -0.9541230788771938)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.700000047683716, 1.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_3_0_38" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.18023544203488, 0, 0, 0.9836234978051772)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.799999952316284, 1.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_3_0_39" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.8529363394684649, 0, 0, 0.5220149430946738)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.9000000953674316, 1.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_4_0_0" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.08902337868941577, 0, 0, 0.9960295367340876)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0, 2, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_4_0_1" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.2792765009737561, 0, 0, 0.960210724791103)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.10000000149011612, 2, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_4_0_2" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.215422116360448, 0, 0, -0.9765210247520456)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.20000000298023224, 2, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_4_0_3" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.02701481844080506, 0, 0, -0.9996350331919197)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.30000001192092896, 2, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_4_0_4" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.558320373986888, 0, 0, 0.8296254335488645)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.4000000059604645, 2, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_4_0_5" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.4338587587233375, 0, 0, 0.9009808973996312)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.5, 2, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_4_0_6" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.8727433057532581, 0, 0, -0.48817939557387646)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.6000000238418579, 2, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_4_0_7" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.7050318885104165, 0, 0, 0.7091756032065935)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.699999988079071, 2, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_4_0_8" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.1892332235735873, 0, 0, -0.9819321703131785)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.800000011920929, 2, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_4_0_9" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9992368705744779, 0, 0, 0.03905990891597382)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.8999999761581421, 2, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_4_0_10" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.6881442351656806, 0, 0, -0.7255739187761923)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1, 2, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_4_0_11" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.49295544489855053, 0, 0, 0.8700545553842427)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.100000023841858, 2, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_4_0_12" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9897129821013215, 0, 0, 0.14306716275969536)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.2000000476837158, 2, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_4_0_13" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.6352837174978765, 0, 0, 0.7722788345423423)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.2999999523162842, 2, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_4_0_14" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.7286881153335343, 0, 0, 0.6848456983669109)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.399999976158142, 2, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_4_0_15" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.989178510391897, 0, 0, -0.14671698803774463)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.5, 2, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_4_0_16" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.44774970751094634, 0, 0, 0.8941589340960935)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.600000023841858, 2, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_4_0_17" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.6181611421109482, 0, 0, 0.7860513993270974)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.7000000476837158, 2, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_4_0_18" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.428048623582487, 0, 0, 0.903755705845965)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.7999999523162842, 2, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_4_0_19" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9861210640231715, 0, 0, -0.16602785034387485)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.899999976158142, 2, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_4_0_20" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.40792596204608694, 0, 0, -0.9130150105495388)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2, 2, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_4_0_21" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.3712678835527571, 0, 0, -0.9285257985873395)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.0999999046325684, 2, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_4_0_22" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.6267599914378067, 0, 0, -0.7792123671585819)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.200000047683716, 2, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_4_0_23" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.3445920936750071, 0, 0, 0.9387525174276099)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.299999952316284, 2, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_4_0_24" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.2656362468774487, 0, 0, 0.9640733293400784)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.4000000953674316, 2, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_4_0_25" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.45632027405395326, 0, 0, -0.8898156030815176)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.5, 2, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_4_0_26" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9999885352314999, 0, 0, 0.004788465887878257)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.5999999046325684, 2, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_4_0_27" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.8229805662149969, 0, 0, 0.5680695271112888)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.700000047683716, 2, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_4_0_28" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.4970905104328357, 0, 0, 0.8676986945003563)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.799999952316284, 2, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_4_0_29" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.7302234170912021, 0, 0, 0.6832084316895163)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.9000000953674316, 2, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_4_0_30" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.41837270645400937, 0, 0, -0.9082754419747058)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3, 2, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_4_0_31" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.3720701787177007, 0, 0, 0.9282046014263117)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.0999999046325684, 2, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_4_0_32" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9243877316140854, 0, 0, -0.38145421958783665)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.200000047683716, 2, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_4_0_33" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.21247197511799845, 0, 0, -0.977167160617597)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.299999952316284, 2, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_4_0_34" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.26567135445862816, 0, 0, 0.9640636552739232)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.4000000953674316, 2, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_4_0_35" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.3022355740988376, 0, 0, 0.9532332651293418)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.5, 2, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_4_0_36" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.5924256924402653, 0, 0, -0.805625098253941)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.5999999046325684, 2, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_4_0_37" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.2540824093528361, 0, 0, 0.967182572866911)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.700000047683716, 2, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_4_0_38" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.48778744207519525, 0, 0, -0.8729624341022573)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.799999952316284, 2, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_4_0_39" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9892204022826607, 0, 0, 0.1464342709468345)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.9000000953674316, 2, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_5_0_0" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.17083903421752455, 0, 0, 0.9852989517844946)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0, 2.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_5_0_1" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.6863155252697517, 0, 0, 0.7273039253116299)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.10000000149011612, 2.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_5_0_2" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.8797848178435883, 0, 0, 0.4753721429489997)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.20000000298023224, 2.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_5_0_3" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.0865152518529348, 0, 0, -0.9962505263219806)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.30000001192092896, 2.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_5_0_4" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.03999562328062048, 0, 0, 0.9991998549431413)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.4000000059604645, 2.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_5_0_5" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.19171500050178228, 0, 0, -0.9814506399114535)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.5, 2.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_5_0_6" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.7191852988708225, 0, 0, -0.6948183258148029)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.6000000238418579, 2.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_5_0_7" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.934189080690192, 0, 0, -0.3567783086444771)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.699999988079071, 2.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_5_0_8" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.017018221374848493, 0, 0, 0.9998551795841418)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.800000011920929, 2.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_5_0_9" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.5567236193165521, 0, 0, 0.8306977860179228)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0.8999999761581421, 2.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_5_0_10" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.1038236741853981, 0, 0, 0.9945957192139148)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1, 2.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_5_0_11" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.8253920006837789, 0, 0, -0.5645600457057057)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.100000023841858, 2.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_5_0_12" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9238991655799633, 0, 0, -0.38263603050503164)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.2000000476837158, 2.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_5_0_13" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.8313211076554929, 0, 0, -0.5557924216525847)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.2999999523162842, 2.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_5_0_14" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.8305936352776351, 0, 0, 0.55687899317202)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.399999976158142, 2.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_5_0_15" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9999983419900159, 0, 0, -0.0018209934704477998)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.5, 2.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_5_0_16" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.4060346003914719, 0, 0, -0.9138577040682744)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.600000023841858, 2.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_5_0_17" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9658170153627385, 0, 0, 0.2592247920932947)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.7000000476837158, 2.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_5_0_18" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.6507713546510323, 0, 0, -0.7592737608831617)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.7999999523162842, 2.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_5_0_19" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9991430786162246, 0, 0, -0.04138971434176499)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (1.899999976158142, 2.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_5_0_20" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.3035836304385033, 0, 0, 0.9528047960258063)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2, 2.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_5_0_21" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.5318819785735155, 0, 0, -0.8468184934616876)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.0999999046325684, 2.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_5_0_22" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.5459281836674799, 0, 0, 0.8378319749672521)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.200000047683716, 2.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_5_0_23" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.783319958171543, 0, 0, 0.6216187281044002)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.299999952316284, 2.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_5_0_24" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.6309242609224956, 0, 0, -0.7758444283356056)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.4000000953674316, 2.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_5_0_25" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.999972571944987, 0, 0, 0.007406440287191187)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.5, 2.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_5_0_26" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.8488947025951133, 0, 0, -0.5285619962747548)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.5999999046325684, 2.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_5_0_27" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.08893386035405754, 0, 0, -0.9960375336715606)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.700000047683716, 2.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_5_0_28" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9531844322737895, 0, 0, 0.30238954689422326)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.799999952316284, 2.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_5_0_29" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9310386136561782, 0, 0, 0.3649206761491894)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (2.9000000953674316, 2.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_5_0_30" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.45193308506009816, 0, 0, -0.8920518407738768)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3, 2.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_5_0_31" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9222528546363388, 0, 0, -0.386587211525581)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.0999999046325684, 2.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_5_0_32" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.6374657609834914, 0, 0, 0.7704786846978561)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.200000047683716, 2.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_5_0_33" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9977229737912142, 0, 0, -0.06744529315835208)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.299999952316284, 2.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_5_0_34" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9508809491356492, 0, 0, 0.3095568131553347)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.4000000953674316, 2.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_5_0_35" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.8965549323909365, 0, 0, -0.4429325605614058)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.5, 2.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_5_0_36" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.31887143985754995, 0, 0, 0.9477979768089679)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.5999999046325684, 2.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_5_0_37" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.9675233618576999, 0, 0, 0.2527816137688308)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.700000047683716, 2.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_5_0_38" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.6501313811941415, 0, 0, 0.7598218127867862)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.799999952316284, 2.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Xform "persun_5_0_39" (
+            prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/persun_scaled.usda@
+        )
+        {
+            quatd xformOp:orient = (0.14718670017304553, 0, 0, 0.9891087277403683)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (3.9000000953674316, 2.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+    }
+
+    def Camera "TopView" (
+        hide_in_stage_window = false
+        no_delete = false
+    )
+    {
+        float4[] clippingPlanes = []
+        float2 clippingRange = (1, 10000000)
+        float exposure = 0
+        float focalLength = 50
+        float focusDistance = 0
+        float fStop = 0
+        float horizontalAperture = 11.007222
+        float horizontalApertureOffset = 0
+        bool omni:kit:cameraLock = 0
+        custom vector3d omni:kit:centerOfInterest = (0, 0, -5)
+        token projection = "orthographic"
+        uniform token purpose = "default"
+        double shutter:close = 0
+        double shutter:open = 0
+        uniform token stereoRole = "mono"
+        float verticalAperture = 11.007222
+        float verticalApertureOffset = 0
+        token visibility = "inherited"
+        float3 xformOp:rotateYXZ = (0, -0, -90)
+        float3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (2.0869033152658063, 1.417364512103324, 3.8887850620895743)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateYXZ", "xformOp:scale"]
+    }
+}
+
+def Xform "Environment"
+{
+    quatd xformOp:orient = (1, 0, 0, 0)
+    double3 xformOp:scale = (1, 1, 1)
+    double3 xformOp:translate = (0, 0, 0)
+    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+    def DistantLight "defaultLight" (
+        prepend apiSchemas = ["ShapingAPI"]
+    )
+    {
+        float inputs:angle = 1
+        float inputs:intensity = 3000
+        float inputs:shaping:cone:angle = 180
+        float inputs:shaping:cone:softness
+        float inputs:shaping:focus
+        color3f inputs:shaping:focusTint
+        asset inputs:shaping:ies:file
+        quatd xformOp:orient = (0.6532814824381883, 0.2705980500730985, 0.27059805007309845, 0.6532814824381882)
+        double3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (0, 0, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+    }
+
+    def Xform "GroundPlane" (
+        prepend apiSchemas = ["MaterialBindingAPI", "SemanticsAPI:Semantics_ngjC"]
+    )
+    {
+        rel material:binding = </Environment/Looks/Grog_Fired_Clay_Dirt> (
+            bindMaterialAs = "weakerThanDescendants"
+        )
+        string semantic:Semantics_ngjC:params:semanticData = "Ground"
+        string semantic:Semantics_ngjC:params:semanticType = "class"
+        quatf xformOp:orient = (1, 0, 0, 0)
+        float3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (0, 0, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        def Mesh "CollisionMesh"
+        {
+            uniform bool doubleSided = 0
+            int[] faceVertexCounts = [4]
+            int[] faceVertexIndices = [0, 1, 2, 3]
+            normal3f[] normals = [(0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1)]
+            point3f[] points = [(-25, -25, 0), (25, -25, 0), (25, 25, 0), (-25, 25, 0)]
+            color3f[] primvars:displayColor = [(0.5, 0.5, 0.5)]
+            texCoord2f[] primvars:st = [(0, 0), (1, 0), (1, 1), (0, 1)] (
+                interpolation = "varying"
+            )
+        }
+
+        def Plane "CollisionPlane" (
+            prepend apiSchemas = ["PhysicsCollisionAPI"]
+        )
+        {
+            uniform token axis = "Z"
+            uniform token purpose = "guide"
+        }
+    }
+
+    def Scope "Looks"
+    {
+        def Material "Grog_Fired_Clay_Dirt"
+        {
+            token outputs:mdl:displacement.connect = </Environment/Looks/Grog_Fired_Clay_Dirt/Shader.outputs:out>
+            token outputs:mdl:surface.connect = </Environment/Looks/Grog_Fired_Clay_Dirt/Shader.outputs:out>
+            token outputs:mdl:volume.connect = </Environment/Looks/Grog_Fired_Clay_Dirt/Shader.outputs:out>
+
+            def Shader "Shader"
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @http://omniverse-content-production.s3.us-west-2.amazonaws.com/Materials/vMaterials_2/Ceramic/Grog_Fired_Clay.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "Grog_Fired_Clay_Dirt"
+                float2 inputs:texture_scale = (0.025, 0.025) (
+                    customData = {
+                        float2 default = (1, 1)
+                    }
+                    displayGroup = "Transform"
+                    displayName = "Scale"
+                    doc = """Larger numbers increase the size.
+
+"""
+                    hidden = false
+                )
+                token outputs:out (
+                    renderType = "material"
+                )
+            }
+        }
+    }
+}
+

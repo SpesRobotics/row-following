@@ -92,12 +92,12 @@ private:
         if (turn_direction_ == "left")
         {
             STARTING_ANGLE = -90;
-            ENDING_ANGLE = 90;
+            ENDING_ANGLE = 100;
         }
         else
         {
             STARTING_ANGLE = 90;
-            ENDING_ANGLE = -90;
+            ENDING_ANGLE = -100;
         }
         double translation_y;
         if (turn_direction_ == "left")
@@ -154,7 +154,7 @@ private:
         }
         else
         {
-            for (int angle = ENDING_ANGLE; angle > STARTING_ANGLE; angle -= step)
+            for (int angle = STARTING_ANGLE; angle > ENDING_ANGLE; angle -= step)
             {
                 double angle_rad = angle * M_PI / 180.0;
                 double x = x_offset + arc_radius_ * std::cos(angle_rad);

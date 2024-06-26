@@ -2,26 +2,28 @@
 <root BTCPP_format="4">
   <BehaviorTree ID="main_tree">
     <Sequence>
-      <Script code="turn := &quot;left&quot;;&#10;field_coordinates := 3.5"/>
+      <Script code="turn := &quot;left&quot;;&#10;field_coordinates := 3.42"/>
       <Repeat num_cycles="-1">
         <Fallback>
           <ReactiveSequence>
             <Inverter>
-              <IsOutOfField field_coordinates="{field_coordinates}"/>
+              <IsOutOfField field_coordinates="{field_coordinates}"
+                            turn="{turn}"/>
             </Inverter>
             <FollowRowTopicNode mode="ml"/>
           </ReactiveSequence>
           <Sequence>
-            <GeneratePath arc_radius="0.255"
+            <GeneratePath arc_radius="0.265"
                           line_length="0.75"
                           reference_frame="base_link"
                           anchor_frame="odom"
                           turn="{turn}"
                           waypoints="{waypoints}"
                           _onSuccess="turn := (turn == &quot;left&quot;) ? &quot;right&quot; : &quot;left&quot;"/>
-            <ForceSuccess _onSuccess="field_coordinates += 0.9">
+            <ForceSuccess>
               <FollowPath waypoints="{waypoints}"/>
             </ForceSuccess>
+            <Script code="field_coordinates = (turn == &quot;left&quot;) ? 3.42 : 0.52"/>
           </Sequence>
         </Fallback>
       </Repeat>
@@ -30,7 +32,7 @@
 
   <BehaviorTree ID="test_rotate">
     <Sequence>
-      <Script code="turn := &quot;left&quot;;&#10;field_coordinates := 3.5"/>
+      <Script code="turn := &quot;right&quot;;&#10;field_coordinates := 3.5"/>
       <Repeat num_cycles="-1">
         <Sequence>
           <GeneratePath arc_radius="0.425"
@@ -40,7 +42,10 @@
                         turn="{turn}"
                         waypoints="{waypoints}"
                         _onSuccess="turn := (turn == &quot;left&quot;) ? &quot;right&quot; : &quot;left&quot;"/>
-          <FollowPath waypoints="{waypoints}"/>
+          <ForceSuccess>
+            <FollowPath waypoints="{waypoints}"/>
+          </ForceSuccess>
+          <Script code="field_coordinates = (turn == &quot;left&quot;) ? field_coordinates + 0.9 : 3.0"/>
         </Sequence>
       </Repeat>
     </Sequence>
@@ -75,6 +80,7 @@
     <Condition ID="IsOutOfField"
                editable="true">
       <input_port name="field_coordinates"/>
+      <input_port name="turn"/>
     </Condition>
   </TreeNodesModel>
 
