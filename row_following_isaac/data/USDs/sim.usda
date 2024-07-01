@@ -7,8 +7,8 @@
                 double radius = 5
             }
             dictionary Perspective = {
-                double3 position = (0.47544812944826476, 3.888243472618088, 1.5360690127489256)
-                double3 target = (2.207464035838529, -0.7740015499051927, -0.3378173694017279)
+                double3 position = (-1.8400444743953517, 0.3711286560479943, 1.5079166012050045)
+                double3 target = (2.8036889778651175, 1.1115871085766644, -1.3592316504985835)
             }
             dictionary Right = {
                 double3 position = (0, -5, 0)
@@ -18,7 +18,7 @@
                 double3 position = (2.0778422485786896, 1.2729814299662952, 5.420358538902339)
                 double radius = 10.043595886230468
             }
-            string boundCamera = "/World/Camera"
+            string boundCamera = "/World/spesbot/spesbot_raw/base_link/Camera_01"
         }
         dictionary metricsAssembler = {
             dictionary "/World/Camera01" = {
@@ -93,7 +93,7 @@ def Xform "World"
         prepend references = @/home/milos/row-following/row_following_isaac/data/USDs/spesbot.usda@
     )
     {
-        token visibility = "invisible"
+        token visibility = "inherited"
         quatd xformOp:orient = (1, 0, 0, 0)
         double3 xformOp:scale = (1, 1, 1)
         double3 xformOp:translate = (0, 0.25, 0)
@@ -129,6 +129,15 @@ def Xform "World"
                     quatd xformOp:orient = (0.6037795550480051, 0.38590429363592216, -0.3756429615706249, -0.5877248424916569)
                     double3 xformOp:scale = (1, 1, 1)
                     double3 xformOp:translate = (-1.0689546011910582, 0.02735265898500553, 0.496120851374671)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                over "Camera"
+                {
+                    custom uniform vector3d omni:kit:centerOfInterest = (0, 0, -125.9348964194402)
+                    quatd xformOp:orient = (0.6408563820557884, 0.2988362387301198, -0.29883623873011994, -0.6408563820557887)
+                    double3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (-0.1, 1.1093356479670479e-31, 0.5)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
                 }
             }
@@ -355,7 +364,7 @@ def compute(db: og.Database):
             prepend apiSchemas = ["NodeGraphNodeAPI"]
         )
         {
-            custom rel inputs:cameraPrim = </World/TopView> (
+            custom rel inputs:cameraPrim = </World/spesbot/spesbot_raw/base_link/Camera_01> (
                 customData = {
                     dictionary omni = {
                         dictionary graph = {
@@ -515,7 +524,7 @@ def compute(db: og.Database):
         float2 clippingRange = (0.01, 10000000)
         float focalLength = 18.147562
         float focusDistance = 400
-        bool omni:kit:cameraLock = 0
+        bool omni:kit:cameraLock = 1
         custom uniform vector3d omni:kit:centerOfInterest = (0, 0, -400)
         quatd xformOp:orient = (0.7026805189685417, 0.18608221397564534, -0.21776270937240017, -0.6513009291493564)
         double3 xformOp:scale = (1, 1, 1)
@@ -530,6 +539,7 @@ def compute(db: og.Database):
             double radius = 0.25
             custom bool refinementEnableOverride = 1
             custom int refinementLevel = 2
+            token visibility = "invisible"
             quatd xformOp:orient = (1, 0, 0, 0)
             double3 xformOp:scale = (0.2, 0.2, 0.2)
             double3 xformOp:translate = (0, 0, 0.1)
