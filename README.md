@@ -13,12 +13,14 @@ cd ~/ros2_ws
 git clone https://github.com/SpesRobotics/row-following.git src/row-following
 ```
 ### Install dependencies
+```bash
 sudo apt install python3-vcstool
 vcs import src < src/row-following/row-following.repos
 mv src/spes_autonomy/spesbot_description src/
 rm -rf src/spes_autonomy
 rosdep update
 rosdep install --from-paths src --ignore-src -r
+```
 
 ### Build the Project
 ```bash
