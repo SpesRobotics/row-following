@@ -65,7 +65,7 @@ At line `50` change the `apply_action` method as follows:
 ### Start the simulation `row_following_isaac/data/USDs/sim.usda`
 
 ### For generating a simulation with new agriculture field:
-Run the script at the `~/ros2_ws/src/row-following/row_following_isaac/data/scripts/spawn_plants.py` location from the Isaac Simulation.
+Run the script at the `~/ros2_ws/src/row-following/row_following_isaac/data/scripts/spawn_plants.py` location from the NVIDIA Isaac Sim script editor.
 
 ### For generating a dataset for YOLOv8 training run the following script:
 ```bash
