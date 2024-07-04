@@ -1,0 +1,33 @@
+repositories:
+  spes_autonomy:
+    type: git
+    url: https://github.com/SpesRobotics/spes_autonomy.git
+    version: main
+  topic_based_ros2_control:
+    type: git
+    url: https://github.com/PickNikRobotics/topic_based_ros2_control.git
+    version: main
+  BehaviorTree.ROS2:
+    type: git
+    url: https://github.com/BehaviorTree/BehaviorTree.ROS2.git
+    version: humble
+  pymap3d:
+    type: git
+    url: https://github.com/geospace-code/pymap3d.git
+    version: main
+  transforms3d:
+    type: git
+    url: https://github.com/matthew-brett/transforms3d.git
+    version: main
+  ros2_control:
+    type: git
+    url: https://github.com/ros-controls/ros2_control.git
+    version: humble
+  navigation2:
+    type: git
+    url: https://github.com/ros-navigation/navigation2.git
+    version: humble
+  ros2_numpy:
+    type: git
+    url: https://github.com/Box-Robotics/ros2_numpy.git
+    version: humble
